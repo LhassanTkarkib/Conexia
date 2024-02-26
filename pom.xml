@@ -18,15 +18,15 @@
     <name>Connexia</name>
     <description>Connexia</description>
 
-<!--    <modules>-->
-<!--        <module>UserMicroService</module>-->
+    <modules>
+        <module>UserMicroService</module>
 <!--        <module>ReactionMicroService</module>-->
 <!--        <module>PublicationMicroService</module>-->
 <!--        <module>NotificationMicroService</module>-->
 <!--        <module>GroupMicroService</module>-->
 <!--        <module>FriendMicroService</module>-->
 <!--        <module>MediaMicroService</module>-->
-<!--    </modules>-->
+    </modules>
 
     <properties>
         <java.version>17</java.version>
