@@ -4,7 +4,7 @@ package com.simplon;
  * Hello world!
  *
  */
-public class App 
+public class Publication
 {
     public static void main( String[] args )
     {
