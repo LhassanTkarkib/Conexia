@@ -20,12 +20,12 @@
 
     <modules>
         <module>UserMicroService</module>
-<!--        <module>ReactionMicroService</module>-->
-<!--        <module>PublicationMicroService</module>-->
-<!--        <module>NotificationMicroService</module>-->
-<!--        <module>GroupMicroService</module>-->
-<!--        <module>FriendMicroService</module>-->
-<!--        <module>MediaMicroService</module>-->
+        <module>ReactionMicroService</module>
+        <module>PublicationMicroService</module>
+        <module>NotificationMicroService</module>
+        <module>GroupMicroService</module>
+        <module>FriendMicroService</module>
+        <module>MediaMicroService</module>
     </modules>
 
     <properties>
@@ -47,16 +47,19 @@
     </dependencyManagement>
 
     <dependencies>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
