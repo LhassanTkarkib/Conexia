@@ -1,2 +1,4 @@
-package com.simplon.GroupeService;public interface IGroup {
+package com.simplon.GroupeService;
+
+public interface IGroup {
 }

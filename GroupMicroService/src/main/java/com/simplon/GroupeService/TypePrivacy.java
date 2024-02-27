@@ -1,2 +1,5 @@
-package com.simplon.GroupeService;public enum TypePrivacy {
+package com.simplon.GroupeService;
+
+public enum TypePrivacy {
+    PUBLIC, PRIVATE
 }

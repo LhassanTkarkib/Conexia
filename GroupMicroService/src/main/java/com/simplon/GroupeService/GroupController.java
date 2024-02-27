@@ -1,2 +1,4 @@
-package com.simplon.GroupeService;public class GroupController {
+package com.simplon.GroupeService;
+
+public class GroupController {
 }

@@ -1,2 +1,4 @@
-package com.simplon.GroupeService;public class GroupDto {
+package com.simplon.GroupeService;
+
+public class GroupDto {
 }
