@@ -15,4 +15,5 @@ public class Media {
     private String name;
     private TypeFile typeFile;
     private Date dateCreation;
+    private long postId;
 }

@@ -1,10 +1,11 @@
 package com.simplon.servicemedia;
 
+import java.util.List;
+
 public interface IMedia {
-     void createMedia();
-     void readMedia();
-     void updateMedia();
-     void deleteMedia();
-     void listMedia();
+     MediaDTO addMedia(MediaDTO mediaDTO);
+     MediaDTO updateMedia(MediaDTO mediaDTO);
+     boolean deleteMedia(long id);
+     List<MediaDTO> listMedia();
 
 }

@@ -33,7 +33,6 @@ class PostControllerTest {
         postDTO = new PostDTO();
         postDTO.setContent("Hello");
         postDTO.setUserId(1);
-        postDTO.setFileId(1);
         postDTO.setDatePost("2021-07-01");
         postDTO.setDeleted(false);
 

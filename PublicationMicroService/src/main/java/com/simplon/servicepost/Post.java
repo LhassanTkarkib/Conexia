@@ -18,7 +18,6 @@ public class Post {
     private String content;
     private Date datePost;
     private long userId;
-    private long fileId;
     private boolean deleted = false;
 
 }
