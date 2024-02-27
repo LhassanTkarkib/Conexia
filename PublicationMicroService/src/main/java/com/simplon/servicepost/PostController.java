@@ -1,4 +1,4 @@
-package com.simplon.postservice;
+package com.simplon.servicepost;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,6 @@ public class PostController {
     PostController(Ipost postService){
         this.postService = postService;
     }
-
 
     @GetMapping
     public ResponseEntity<List<PostDTO>> getPosts(){

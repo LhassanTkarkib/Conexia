@@ -1,4 +1,4 @@
-package com.simplon.postservice;
+package com.simplon.servicepost;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +34,7 @@ class ServicePostTest {
     @Test
     void addPost() {
       PostDTO post= postService.addPost(postDTO);
-      assertNotNull(post.getPostId());
+      assertEquals(post.getContent(),postDTO.getContent());
     }
 
     @Test
@@ -46,10 +46,16 @@ class ServicePostTest {
 
     @Test
     void updatePost() {
+        PostDTO post= postService.addPost(postDTO);
+        String content=post.getContent();
+        post.setContent("helloworld");
+        PostDTO postDTO1=postService.updatePost(post,post.getPostId());
+        assertEquals(content,postDTO1.getContent());
     }
 
     @Test
     void getPost() {
+        
     }
 
     @Test

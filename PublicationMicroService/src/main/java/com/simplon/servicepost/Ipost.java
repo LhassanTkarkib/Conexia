@@ -1,4 +1,4 @@
-package com.simplon.postservice;
+package com.simplon.servicepost;
 
 
 import java.util.List;
