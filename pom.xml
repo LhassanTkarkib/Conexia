@@ -27,7 +27,6 @@
         <module>GroupMicroService</module>
         <module>FriendMicroService</module>
         <module>MediaMicroService</module>
-        <module>demo</module>
     </modules>
 
     <properties>
