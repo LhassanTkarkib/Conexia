@@ -60,6 +60,11 @@ public class PostService implements Ipost {
         return posts.stream().map(c->this.mapper.modelMapper().map(c,PostDTO.class)).toList();
     }
 
-
+    public boolean harddeletePost(long postId) {
+        Post post = postRepository.findById(postId).orElse(null);
+        if (post == null)throw new IllegalArgumentException("Post not found");
+        postRepository.delete(post);
+        return true;
+    }
 
 }

@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ServicePostTest {
@@ -16,7 +18,7 @@ class ServicePostTest {
     ServicePostTest(Ipost postService1){
         this.postService = postService1;
     }
-    PostDTO postDTO;
+    PostDTO postDTO,post;
     @BeforeEach
     void setUp() {
         postDTO = new PostDTO();
@@ -29,40 +31,50 @@ class ServicePostTest {
 
     @AfterEach
     void tearDown() {
+        if(this.postService.getPost(post.getPostId())!=null)
+            this.postService.harddeletePost(post.getPostId());
     }
 
     @Test
     void addPost() {
-      PostDTO post= postService.addPost(postDTO);
+        post= postService.addPost(postDTO);
       assertEquals(post.getContent(),postDTO.getContent());
     }
 
     @Test
     void deletePost() {
-        PostDTO post= postService.addPost(postDTO);
+         post= postService.addPost(postDTO);
         boolean result = postService.deletePost(post.getPostId());
         assertTrue(result);
     }
 
     @Test
     void updatePost() {
-        PostDTO post= postService.addPost(postDTO);
+        post= postService.addPost(postDTO);
         String content=post.getContent();
         post.setContent("helloworld");
+        post.setDatePost("2021-08-01");
         PostDTO postDTO1=postService.updatePost(post,post.getPostId());
-        assertEquals(content,postDTO1.getContent());
+        assertNotEquals(content,postDTO1.getContent());
     }
 
     @Test
     void getPost() {
-        String s="MC-12";
+         post= postService.addPost(postDTO);
+        assertEquals(postService.getPost(post.getPostId()).getContent(),post.getContent());
     }
 
     @Test
     void getAllPosts() {
+        post= postService.addPost(postDTO);
+        List<PostDTO> postDTOS=this.postService.getAllPosts();
+        assertNotNull(postDTOS);
     }
 
     @Test
     void getPostsByUser() {
+        post= postService.addPost(postDTO);
+        List<PostDTO> postDTOS=this.postService.getPostsByUser(post.getUserId());
+        assertNotNull(postDTOS);
     }
 }
