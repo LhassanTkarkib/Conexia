@@ -1,0 +1,21 @@
+server:
+  port: 5050
+
+spring:
+  application:
+    name: user-microservice
+
+  datasource:
+    url: jdbc:postgresql://localhost:5222/user_microservice
+    username: user_microservice
+    password: user_microservice
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
