@@ -55,7 +55,7 @@ class ServicePostTest {
 
     @Test
     void getPost() {
-        
+        String s="MC-12";
     }
 
     @Test
