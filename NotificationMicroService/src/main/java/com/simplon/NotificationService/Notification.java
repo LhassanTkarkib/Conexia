@@ -17,7 +17,7 @@ public class Notification {
     private Long idNotif;
     private String contentNotif;
     private String typeNotif;
-    private Boolean isRead;
+    private boolean readNotif ;
     private Long senderId;
     private Long recipientId;
     private Date dateNotif;
