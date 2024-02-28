@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table
+@Table(name = "groups")
 public class Group {
 
     @Id

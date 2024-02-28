@@ -13,7 +13,7 @@ public class GroupMapper implements Function<Group,GroupDTO >{
         groupDTO.setGroupName(group.getGroupName());
         groupDTO.setGroupDescription(group.getGroupDescription());
         groupDTO.setGroupDateCreation(group.getGroupDateCreation());
-        groupDTO.setPrivacy(group.getPrivacy());
+        groupDTO.setPrivacy(TypePrivacy.PUBLIC);
         return groupDTO;
 
     }
