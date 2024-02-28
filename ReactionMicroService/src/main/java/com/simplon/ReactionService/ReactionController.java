@@ -50,4 +50,11 @@ public class ReactionController {
         reactionService.removeReactionFromAPost(id);
         return new ResponseEntity<>("reaction deleted successfully", HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ReactionDTO> updatingAReaction(@PathVariable Long id, @RequestBody ReactionDTO reactionDTO){
+        LOGGER.info("Controller: Updating a  reaction to post");
+        ReactionDTO updatedReaction =reactionService.updateReaction(id,reactionDTO);
+        return new ResponseEntity<>(updatedReaction,HttpStatus.OK);
+    }
 }

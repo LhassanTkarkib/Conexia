@@ -57,7 +57,6 @@ public class ReactionServiceImpl implements ReactionService {
             // check if the user has already reacted to that post before adding a new reaction
             Reaction reaction = reactionMapper.toEntity(reactionDTO);
             Optional<Reaction> reactionAlreadyExist = reactionRepository.findReactionByUserIdAndPostId(reaction.getUserId(), reaction.getPostId());
-
             if (reactionAlreadyExist.isPresent()) {
                 throw new EntityNotFoundException("The user already reacted to that post");
             }
@@ -90,16 +89,18 @@ public class ReactionServiceImpl implements ReactionService {
     }
 
     @Override
-    public ReactionDTO updateReaction(Long id,ReactionDTO reactionDTO) {
+    public ReactionDTO updateReaction(Long id, ReactionDTO reactionDTO) {
         try {
             LOGGER.info("Updating reaction");
-            Optional<Reaction> existingReaction = reactionRepository.findById(id);
-            if (existingReaction.isEmpty()) {
-                throw new EntityNotFoundException("Reaction with id " + id + " not found");
+            Reaction existingReaction = reactionRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException("Reaction with id " + id + " not found"));
+            if (!reactionRepository.findReactionByUserIdAndPostId(existingReaction.getUserId(), existingReaction.getPostId()).isPresent()) {
+                throw new EntityNotFoundException("The user didn't react to that post");
             }
-            Reaction reaction = reactionMapper.toEntity(reactionDTO);
-           reaction.setTypeReaction(existingReaction.get().getTypeReaction());
-            return reactionMapper.toDTO(reaction);
+
+            existingReaction.setTypeReaction(reactionDTO.getTypeReaction());
+            reactionRepository.save(existingReaction);
+            return reactionMapper.toDTO(existingReaction);
         } catch (EntityNotFoundException e) {
             LOGGER.error("Reaction not found: " + e.getMessage());
             throw e;
@@ -108,4 +109,5 @@ public class ReactionServiceImpl implements ReactionService {
             throw new RuntimeException("Failed to update reaction", e);
         }
     }
+
 }
