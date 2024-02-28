@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface IMedia {
      MediaDTO addMedia(MultipartFile file,long postId) throws FileStorageException;
-     boolean deleteMedia(long id);
+     boolean deleteMedia(long mediaId);
+
      List<MediaDTO> listMedia();
 
 }
