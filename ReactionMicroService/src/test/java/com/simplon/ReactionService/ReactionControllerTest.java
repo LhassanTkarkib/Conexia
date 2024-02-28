@@ -51,11 +51,11 @@ class ReactionControllerTest {
 
     @Test
     void addingReactionToAPost() {
-        long postId = 1L;
+
         ReactionDTO inputReactionDTO = new ReactionDTO();
         ReactionDTO mockAddedReactionDTO = new ReactionDTO();
-        when(reactionService.addReactionToPost(postId, inputReactionDTO)).thenReturn(mockAddedReactionDTO);
-        ResponseEntity<ReactionDTO> response = reactionController.addingReactionToAPost(postId, inputReactionDTO);
+        when(reactionService.addReactionToPost(inputReactionDTO)).thenReturn(mockAddedReactionDTO);
+        ResponseEntity<ReactionDTO> response = reactionController.addingReactionToAPost(inputReactionDTO);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(mockAddedReactionDTO, response.getBody());
     }

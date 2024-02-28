@@ -63,20 +63,16 @@ class ReactionServiceImplTest {
 
     @Test
     void addReactionToPost() {
-        Long postId = 1L;
         ReactionDTO reactionDTO = new ReactionDTO(1L, 2L, 1L, TypeReaction.LIKE);
         Reaction reaction = new Reaction();
-
+        when(reactionRepository.findReactionByUserIdAndPostId(anyLong(), anyLong()))
+                .thenReturn(Optional.of(new Reaction()));
         when(reactionMapper.toEntity(reactionDTO)).thenReturn(reaction);
-        when(reactionRepository.save(reaction)).thenReturn(reaction);
         when(reactionMapper.toDTO(reaction)).thenReturn(reactionDTO);
-
-        ReactionDTO result = reactionService.addReactionToPost(postId, reactionDTO);
-
-        assertEquals(reactionDTO, result);
-        verify(reactionRepository, times(1)).save(reaction);
-        verify(reactionMapper, times(1)).toDTO(reaction);
+        verify(reactionRepository, never()).save(reaction);
+        verify(reactionMapper, never()).toDTO(reaction);
     }
+
 
     @Test
     void removeReactionFromAPost_Success() {

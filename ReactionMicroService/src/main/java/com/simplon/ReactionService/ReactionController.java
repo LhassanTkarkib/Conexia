@@ -27,7 +27,7 @@ public class ReactionController {
         return new ResponseEntity<>(reactionDTOS, HttpStatus.OK);
 
     }
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<ReactionDTO>> getAllReactionsByUserId(@PathVariable long userId){
         List<ReactionDTO> reactionDTOS=reactionService.getAllReactionsByUseId(userId);
         LOGGER.info("reactions fetched successfuly ");
@@ -35,13 +35,12 @@ public class ReactionController {
 
     }
 
-    @PostMapping("/{postId}")
+    @PostMapping
     public ResponseEntity<ReactionDTO> addingReactionToAPost(
-            @PathVariable long postId,
             @RequestBody ReactionDTO reactionDTO
     ){
-        LOGGER.info("Adding reaction to post");
-        ReactionDTO addedReaction = reactionService.addReactionToPost(postId, reactionDTO);
+        LOGGER.info("Controller: Adding reaction to post");
+        ReactionDTO addedReaction = reactionService.addReactionToPost(reactionDTO);
         return new ResponseEntity<>(addedReaction, HttpStatus.CREATED);
     }
 

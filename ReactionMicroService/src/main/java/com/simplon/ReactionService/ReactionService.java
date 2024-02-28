@@ -7,7 +7,7 @@ import java.util.List;
 public interface ReactionService {
   List<ReactionDTO> getAllReactionsByPostId(Long postId);
   List<ReactionDTO> getAllReactionsByUseId(Long userId);
-  ReactionDTO addReactionToPost(Long postId,ReactionDTO reactionDTO);
+  ReactionDTO addReactionToPost(ReactionDTO reactionDTO);
   void removeReactionFromAPost(Long id);
   ReactionDTO updateReaction(Long id,ReactionDTO reactionDTO);
 

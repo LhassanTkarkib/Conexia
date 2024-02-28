@@ -49,19 +49,29 @@ public class ReactionServiceImpl implements ReactionService {
        }
     }
 
-    @Override
-    public ReactionDTO addReactionToPost(Long postId, ReactionDTO reactionDTO) {
-        try {
-            LOGGER.info("Adding new reaction to post");
 
+    @Override
+    public ReactionDTO addReactionToPost(ReactionDTO reactionDTO) {
+        try {
+            LOGGER.info("Service: Adding a new reaction to the post");
+            // check if the user has already reacted to that post before adding a new reaction
             Reaction reaction = reactionMapper.toEntity(reactionDTO);
+            Optional<Reaction> reactionAlreadyExist = reactionRepository.findReactionByUserIdAndPostId(reaction.getUserId(), reaction.getPostId());
+
+            if (reactionAlreadyExist.isPresent()) {
+                throw new EntityNotFoundException("The user already reacted to that post");
+            }
             Reaction newReaction = reactionRepository.save(reaction);
             return reactionMapper.toDTO(newReaction);
+        } catch (EntityNotFoundException e) {
+            LOGGER.warn("User already reacted to the post: {}", e.getMessage());
+            throw e;
         } catch (Exception e) {
-            LOGGER.error("An error has occurred while adding a new reaction to post");
+            LOGGER.error("An error has occurred while adding a new reaction to the post", e);
             throw e;
         }
     }
+
 
     @Override
     public void removeReactionFromAPost(Long id) {
