@@ -6,10 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class Friend {
+public class FriendApp {
     public static void main(String[] args) {
-
         System.out.println("Hello World!");
-        SpringApplication.run(Friend.class, args);
+        SpringApplication.run(FriendApp.class, args);
     }
 }
