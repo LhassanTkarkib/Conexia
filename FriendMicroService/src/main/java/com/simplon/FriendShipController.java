@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
-import java.util.Set;
 
 
 @Slf4j
@@ -23,7 +22,7 @@ public class FriendShipController {
 
     @GetMapping("/requested-accepted-rejected/all")
     public ResponseEntity<List<FriendShipDto>> getAllFriendRequestedAcceptedRejected() {
-        log.info("new get request for retrieve data from FriendShip database methode invoked getAllFriendAccepted()  ");
+        log.info("new get request for retrieve data from FriendShip database methode invoked getAllFriendRequestedAcceptedRejected()  ");
         return ResponseEntity.ok(friendShipService.getAllFriendRequestedAcceptedRejected());
     }
 
@@ -54,9 +53,12 @@ public class FriendShipController {
     }
 
     @PutMapping("/update-friend/{friendId}")
-    public ResponseEntity<FriendShipDto> updateFriendShip(@PathVariable("friendId") long friendId, @RequestBody FriendShipDto friendShipDto) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<FriendShipDto> updateFriendShip(
+            @PathVariable("friendId") long friendId,
+            @RequestBody FriendShipDto friendShipDto) throws ChangeSetPersister.NotFoundException {
         return ResponseEntity.ok(friendShipService.updateFriendShip(friendId, friendShipDto));
     }
+
 
     @DeleteMapping("/delete-friend")
     public ResponseEntity<String> deleteFriendByUserIdAndFriendId(

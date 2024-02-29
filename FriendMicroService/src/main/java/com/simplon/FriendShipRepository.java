@@ -12,6 +12,8 @@ public interface FriendShipRepository extends JpaRepository<FriendShipEntity, Lo
 
     Optional<FriendShipEntity> findByFriendIdAndDeletedFalseAndStatus(long friendId, StatusFriendEnum status);
 
+    Optional<FriendShipEntity> findByFriendshipIdAndFriendIdAndDeletedFalseAndStatusAllIgnoreCase(long friendshipId, long friendId, StatusFriendEnum status);
+
     List<FriendShipEntity> findByDeletedFalse();
 
     Optional<FriendShipEntity> findByUserIdAndFriendIdAndDeletedFalse(long userId, long friendId);

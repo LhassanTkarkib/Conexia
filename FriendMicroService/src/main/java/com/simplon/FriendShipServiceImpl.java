@@ -55,11 +55,10 @@ public class FriendShipServiceImpl implements FriendShipService {
     public FriendShipDto updateFriendShip(long friendId, @NotNull FriendShipDto friendShipDto) throws ChangeSetPersister.NotFoundException {
 
         FriendShipEntity existingfriendShipEntity = friendShipRepository
-                .findByFriendIdAndDeletedFalseAndStatus(friendId, StatusFriendEnum.ACCEPTED)
+                .findByFriendshipIdAndFriendIdAndDeletedFalseAndStatusAllIgnoreCase(friendShipDto.getFriendshipId(),friendId, StatusFriendEnum.REQUESTED)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
         existingfriendShipEntity.setStatus(friendShipDto.getStatus());
-        existingfriendShipEntity.setDateAddition(friendShipDto.getDateAddition());
 
         FriendShipEntity updatedFriendShip = friendShipRepository.save(existingfriendShipEntity);
         updatedFriendShip.setFriendId(friendId);

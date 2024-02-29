@@ -41,5 +41,4 @@ public class FriendShipEntity {
     @Column(name = "date_delete")
     private LocalDate dateDelete;
 
-
 }
