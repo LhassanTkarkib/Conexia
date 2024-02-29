@@ -3,6 +3,10 @@ package com.simplon.NotificationService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +25,16 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
     @GetMapping
-    public ResponseEntity<List<NotificationDTO>> getAllNotifications() {
+    public ResponseEntity<Page<NotificationDTO>> getAllNotifications(@RequestParam(defaultValue = "0") int page,
+                                                                     @RequestParam(defaultValue = "10") int size) {
         try {
-            List<NotificationDTO> notifications = notificationService.getAllNotifications();
-            if (!notifications.isEmpty()) {
-                return new ResponseEntity<>(notifications, HttpStatus.OK);
+            Sort sort = Sort.by("dateNotif").descending();
+            Pageable pageable = PageRequest.of(page, size, sort);
+
+            Page<NotificationDTO> notificationsPage = notificationService.getAllNotifications(pageable);
+
+            if (!notificationsPage.isEmpty()) {
+                return new ResponseEntity<>(notificationsPage, HttpStatus.OK);
             } else {
                 LOGGER.warn("No notifications found");
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -35,6 +44,7 @@ public class NotificationController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @GetMapping("/unread")
     public ResponseEntity<List<NotificationDTO>> getUnreadNotifications() {
         try {

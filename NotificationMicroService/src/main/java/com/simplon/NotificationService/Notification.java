@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @Data
@@ -20,5 +21,5 @@ public class Notification {
     private boolean readNotif ;
     private Long senderId;
     private Long recipientId;
-    private Date dateNotif;
+    private LocalDateTime dateNotif;
 }

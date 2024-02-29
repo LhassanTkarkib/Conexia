@@ -1,10 +1,10 @@
 package com.simplon.NotificationService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -51,14 +51,13 @@ public class NotificationServiceImp implements NotificationService {
     }
 
     @Override
-    public List<NotificationDTO> getAllNotifications() {
+    public Page<NotificationDTO> getAllNotifications(Pageable pageable) {
         try {
-            return notificationRepository.findAll().stream()
-                    .map(notificationMapper::toDTO)
-                    .collect(Collectors.toList());
+            return notificationRepository.findAll(pageable)
+                    .map(notificationMapper::toDTO);
         } catch (Exception e) {
             LOGGER.error("An error occurred while fetching all notifications: {}", e.getMessage());
-            return Collections.emptyList();
+            throw new RuntimeException("Failed to fetch notifications", e);
         }
     }
     @Override
