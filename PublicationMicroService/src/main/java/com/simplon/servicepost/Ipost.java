@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface Ipost {
 
-    PostDTO addPost(PostDTO post,@RequestParam("file") MultipartFile file);
+    PostDTO addPost(PostDTO post,MultipartFile file);
     boolean deletePost(long postId);
     PostDTO updatePost(PostDTO post,long postId);
     PostDTO getPost(long postId);

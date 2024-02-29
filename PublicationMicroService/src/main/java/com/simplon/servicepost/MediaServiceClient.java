@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-@FeignClient(name = "media-service", url = "http://localhost:8081")//add your appropriate port number
+@FeignClient(name = "MEDIA")
 public interface MediaServiceClient {
     @PostMapping("/media/{Id}")
     Media addmedia(@RequestParam("file") MultipartFile file, @PathVariable("Id") long mediaId);

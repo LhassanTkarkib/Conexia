@@ -39,8 +39,7 @@ public class PostController {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(postDTO);
-        return new ResponseEntity<>(postService.addPost(null,null), HttpStatus.CREATED);
+        return new ResponseEntity<>(postService.addPost(postDTO,file), HttpStatus.CREATED);
     }
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO>  getPostById(@PathVariable(value = "id") long id){

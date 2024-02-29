@@ -14,15 +14,15 @@ import java.util.List;
 public class PostService implements Ipost {
     private PostRepository postRepository;
     private MapperConfig mapper;
-
-    private MediaServiceClient mediaServiceClient;
+    private final MediaServiceClient mediaServiceClient;
     @Autowired
-    PostService(PostRepository postRepository, MapperConfig mapper) {
+    PostService(PostRepository postRepository, MapperConfig mapper, MediaServiceClient mediaServiceClient){
         this.postRepository = postRepository;
         this.mapper = mapper;
+        this.mediaServiceClient = mediaServiceClient;
     }
     @Override
-    public PostDTO addPost(PostDTO post,@RequestParam("file") MultipartFile file) {
+    public PostDTO addPost(PostDTO post,MultipartFile file) {
         if (post == null) throw new IllegalArgumentException("Post cannot be null");
         if(file != null){
             Media media = mediaServiceClient.addmedia(file, post.getPostId());
