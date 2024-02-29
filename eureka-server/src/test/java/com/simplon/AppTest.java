@@ -5,9 +5,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple User.
+ * Unit test for simple App.
  */
-public class UserTest
+public class AppTest 
     extends TestCase
 {
     /**
@@ -15,7 +15,7 @@ public class UserTest
      *
      * @param testName name of the test case
      */
-    public UserTest(String testName )
+    public AppTest( String testName )
     {
         super( testName );
     }
@@ -25,7 +25,7 @@ public class UserTest
      */
     public static Test suite()
     {
-        return new TestSuite( UserTest.class );
+        return new TestSuite( AppTest.class );
     }
 
     /**
