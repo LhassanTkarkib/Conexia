@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * User controller to manage user data.
  *
  * @Author Ayoub Ait Si Ahmad
- * @Date 2024-01-28
+ * @Date 2024-02-28
  */
 @RestController
 @RequestMapping("/api/v1/users")

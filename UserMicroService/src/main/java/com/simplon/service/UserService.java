@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
  * User Service interface to manage user data.
  *
  * @Author Ayoub Ait Si Ahmad
- * @Date 2024-01-28
+ * @Date 2024-02-28
  */
 public interface UserService {
     UserDto createUser(UserDto userDto);

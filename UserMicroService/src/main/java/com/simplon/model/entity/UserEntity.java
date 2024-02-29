@@ -9,7 +9,7 @@ import lombok.*;
  * User entity class
  *
  * @Author Ayoub Ait Si Ahmad
- * @Date 2024-01-28
+ * @Date 2024-02-28
  */
 
 @Getter

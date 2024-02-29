@@ -12,7 +12,7 @@ import java.util.Optional;
  * User repository interface to manage user data.
  *
  * @Author Ayoub Ait Si Ahmad
- * @Date 2024-01-28
+ * @Date 2024-02-28
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {

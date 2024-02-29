@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.simplon.model.enums.Gender;
 import com.simplon.model.enums.Role;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,10 +12,11 @@ import lombok.Setter;
  * UserDTO class for user data transfer
  *
  * @Author Ayoub Ait Si Ahmad
- * @Date 2024-01-28
+ * @Date 2024-02-28
  */
 @Getter
 @Setter
+@Builder
 public class UserDto {
     private Long idUser;
 
