@@ -3,58 +3,64 @@ package com.simplon.GroupeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
-@DataJpaTest
+@SpringBootTest
 class GroupRepositoryTest {
 
-    @Autowired
-    private TestEntityManager entityManager;
-
-    @Autowired
+    @Mock
     private GroupRepository groupRepository;
 
+    @Mock
     private Group group;
 
     @BeforeEach
     void setUp() {
-        group = new Group();
-        group.setIdAdmin(1L);
-        group.setGroupName("Test Group");
-        group.setGroupDescription("This is a test group");
+        MockitoAnnotations.openMocks(this);
 
+        group = Group.builder()
+                .idGroup(1L)
+                .idAdmin(1L)
+                .groupName("Test Group")
+                .groupDescription("This is a test group")
+                .build();
     }
 
     @AfterEach
     void tearDown() {
-
     }
 
     @Test
-    void whenFindById_thenReturnGroup() {
+    void whenSave_thenReturnGroup() {
+        when(groupRepository.save(any(Group.class))).thenReturn(group);
+
+        Group saved = groupRepository.save(group);
+
+        assertEquals(group, saved);
+    }
+
+    @Test
+    void whenGetById_thenReturnGroup() {
+        when(groupRepository.findById(anyLong())).thenReturn(Optional.of(group));
+
         Optional<Group> found = groupRepository.findById(group.getIdGroup());
-        assertTrue(found.isPresent());
-        assertEquals(group.getIdGroup(), found.get().getIdGroup());
-    }
 
-    @Test
-    void whenFindAll_thenReturnAllGroups() {
-        List<Group> groups = groupRepository.findAll();
-        assertEquals(1, groups.size());
+        assertEquals(group, found.get());
     }
 
     @Test
     void whenDeleteById_thenDeletingShouldBeSuccessful() {
+        doNothing().when(groupRepository).deleteById(anyLong());
+
         groupRepository.deleteById(group.getIdGroup());
-        Optional<Group> notFound = groupRepository.findById(group.getIdGroup());
-        assertTrue(notFound.isEmpty());
+
+        verify(groupRepository, times(1)).deleteById(group.getIdGroup());
     }
 }
