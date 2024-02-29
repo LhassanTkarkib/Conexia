@@ -1,13 +1,17 @@
 package com.simplon;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * Hello world!
  *
  */
+@SpringBootApplication
 public class Publication
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        SpringApplication.run(Publication.class, args);
     }
 }
