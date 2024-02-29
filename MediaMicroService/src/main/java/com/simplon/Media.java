@@ -2,19 +2,22 @@ package com.simplon;
 
 import com.simplon.servicemedia.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 
 /**
  * Hello world!
  *
  */
 @SpringBootApplication
+@EnableFeignClients
 @EnableConfigurationProperties({
         FileStorageProperties.class
 })
-public class Media
-{
+public class Media {
     public static void main( String[] args )
     {
         SpringApplication.run(Media.class, args);
