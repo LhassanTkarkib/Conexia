@@ -3,9 +3,9 @@ package com.simplon.GroupeService;
 import java.util.List;
 
 public interface IServiceGroup {
-    Group saveGroup(Group group);
-    Group getGroupById(Long id);
-    List<Group> getAllGroups();
+    GroupDTO saveGroup(GroupDTO groupDTO);
+    GroupDTO getGroupById(Long id);
+    List<GroupDTO> getAllGroups();
+    GroupDTO updateGroup(GroupDTO groupDTO);
     void deleteGroup(Long id);
-    Group updateGroup(Group group);
 }

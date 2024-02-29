@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
@@ -16,18 +15,12 @@ import java.util.stream.Collectors;
 public class GroupController {
 
     @Autowired
-    private GroupMapper groupMapper;
-
-    @Autowired
     private IServiceGroup groupService;
 
     @GetMapping("/all")
     public ResponseEntity<List<GroupDTO>> getAllGroups() {
         log.info("Getting all groups");
-        List<Group> groups = groupService.getAllGroups();
-        List<GroupDTO> groupDTOs = groups.stream()
-                .map(groupMapper::groupToGroupDTO)
-                .collect(Collectors.toList());
+        List<GroupDTO> groupDTOs = groupService.getAllGroups();
         log.info("Retrieved " + groupDTOs.size() + " groups");
         return new ResponseEntity<>(groupDTOs, HttpStatus.OK);
     }
@@ -35,27 +28,26 @@ public class GroupController {
     @GetMapping("/{id}")
     public ResponseEntity<GroupDTO> getGroupById(@PathVariable Long id) {
         log.info("Getting group with id " + id);
-        Group group = groupService.getGroupById(id);
+        GroupDTO groupDTO = groupService.getGroupById(id);
         log.info("Retrieved group with id " + id);
-        return new ResponseEntity<>(groupMapper.groupToGroupDTO(group), HttpStatus.OK);
+        return new ResponseEntity<>(groupDTO, HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<GroupDTO> createGroup(@RequestBody GroupDTO groupDTO) {
-        log.info("Creating group");
-        Group group = groupMapper.groupDTOToGroup(groupDTO);
-        Group newGroup = groupService.saveGroup(group);
-        log.info("Created group with id " + newGroup.getIdGroup());
-        return new ResponseEntity<>(groupMapper.groupToGroupDTO(newGroup), HttpStatus.CREATED);
+        log.info("Creating group with GroupDTO: " + groupDTO);
+        GroupDTO newGroupDTO = groupService.saveGroup(groupDTO);
+        log.info("Created group with id " + newGroupDTO.getIdGroup());
+        return new ResponseEntity<>(newGroupDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<GroupDTO> updateGroup(@PathVariable Long id) {
+    public ResponseEntity<GroupDTO> updateGroup(@PathVariable Long id, @RequestBody GroupDTO groupDTO) {
         log.info("Updating group with id " + id);
-        Group group = groupService.getGroupById(id);
-        Group newGroup = groupService.updateGroup(group);
-        log.info("Updated group with id " + newGroup.getIdGroup());
-        return new ResponseEntity<>(groupMapper.groupToGroupDTO(newGroup), HttpStatus.OK);
+        groupDTO.setIdGroup(id);
+        GroupDTO updatedGroupDTO = groupService.updateGroup(groupDTO);
+        log.info("Updated group with id " + updatedGroupDTO.getIdGroup());
+        return new ResponseEntity<>(updatedGroupDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

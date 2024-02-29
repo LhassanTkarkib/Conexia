@@ -6,8 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
-@SpringBootApplication
-@ComponentScan({"com.simplon", "com.simplon.GroupeService"})
+@SpringBootApplication(scanBasePackages = {"com.simplon"})
 public class GroupMain {
     public static void main(String[] args) {
         SpringApplication.run(GroupMain.class, args);

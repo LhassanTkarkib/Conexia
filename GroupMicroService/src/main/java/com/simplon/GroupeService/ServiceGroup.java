@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ServiceGroup implements IServiceGroup{
@@ -12,33 +13,43 @@ public class ServiceGroup implements IServiceGroup{
     @Autowired
     private GroupRepository groupRepository;
 
-    public Group saveGroup(Group group) {
+    @Autowired
+    private GroupMapper groupMapper;
+
+    public GroupDTO saveGroup(GroupDTO groupDTO) {
         try {
-            return groupRepository.save(group);
+            Group group = groupMapper.groupDTOToGroup(groupDTO);
+            Group savedGroup = groupRepository.save(group);
+            return groupMapper.groupToGroupDTO(savedGroup);
         } catch (Exception e) {
             throw new RuntimeException("Failed to save group");
         }
     }
 
-    public Group getGroupById(Long id) {
+    public GroupDTO getGroupById(Long id) {
         Optional<Group> group = groupRepository.findById(id);
-        if (!group.isPresent()) {
+        if (group.isEmpty()) {
             throw new RuntimeException("Group id not found : " + id);
         }
-        return group.get();
+        return groupMapper.groupToGroupDTO(group.get());
     }
 
-    public List<Group> getAllGroups() {
+    public List<GroupDTO> getAllGroups() {
         try {
-            return groupRepository.findAll();
+            List<Group> groups = groupRepository.findAll();
+            return groups.stream()
+                    .map(groupMapper::groupToGroupDTO)
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             throw new RuntimeException("Failed to retrieve groups");
         }
     }
 
-    public Group updateGroup(Group group) {
+    public GroupDTO updateGroup(GroupDTO groupDTO) {
         try {
-            return groupRepository.save(group);
+            Group group = groupMapper.groupDTOToGroup(groupDTO);
+            Group updatedGroup = groupRepository.save(group);
+            return groupMapper.groupToGroupDTO(updatedGroup);
         } catch (Exception e) {
             throw new RuntimeException("Failed to update group");
         }
@@ -51,5 +62,4 @@ public class ServiceGroup implements IServiceGroup{
             throw new RuntimeException("Failed to delete group with id : " + id);
         }
     }
-
 }
