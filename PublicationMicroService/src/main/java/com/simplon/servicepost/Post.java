@@ -3,6 +3,7 @@ package com.simplon.servicepost;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 @Data
 @Setter
@@ -16,7 +17,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long postId;
     private String content;
-    private Date datePost;
+    private String datePost;
     private long userId;
     private boolean deleted = false;
 

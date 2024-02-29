@@ -3,6 +3,7 @@ package com.simplon.servicemedia;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,13 +24,12 @@ public class MediaService implements IMedia{
     private MapperConfig mapperConfig;
     private static final Logger LOGGER = LoggerFactory.getLogger(MediaService.class);
 
-
+    @Autowired
     MediaService(MediaRepository mediaRepository1,MapperConfig mapperConfig,FileStorageProperties fileStorageProperties) throws FileStorageException {
         this.mediaRepository = mediaRepository1;
         this.mapperConfig = mapperConfig;
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
-
         try {
             Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {

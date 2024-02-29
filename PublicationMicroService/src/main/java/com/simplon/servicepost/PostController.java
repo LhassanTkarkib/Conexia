@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/post")
+@RequestMapping("/posts")
 public class PostController {
 
     private Ipost postService;
@@ -33,6 +33,10 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO>  getPostById(@PathVariable(value = "id") long id){
         return new ResponseEntity<>(postService.getPost(id),HttpStatus.OK);
+    }
+    @GetMapping("/user/{iduser}")
+    public ResponseEntity<List<PostDTO>>  getPostsByUser(@PathVariable(value = "iduser") long id){
+        return new ResponseEntity<>(postService.getPostsByUser(id),HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<PostDTO>  updatePost(@RequestBody PostDTO postDTO,@PathVariable(value = "id") long id){

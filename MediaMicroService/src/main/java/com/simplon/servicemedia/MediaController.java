@@ -1,5 +1,6 @@
 package com.simplon.servicemedia;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/media")
 public class MediaController {
     private MediaService mediaService;
-
+    @Autowired
     public MediaController(MediaService mediaService) {
         this.mediaService = mediaService;
     }
@@ -23,8 +24,9 @@ public class MediaController {
         return new ResponseEntity<>(mediaService.addMedia(file, postId), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteMedia(@PathVariable(value = "id") long mediaId) {
-        return new ResponseEntity<>(mediaService.deleteMedia(mediaId), HttpStatus.OK);
+   @DeleteMapping("/{fileId}")
+    public ResponseEntity<Void> deleteMedia(@PathVariable(value = "fileId") long fileId) {
+        mediaService.deleteMedia(fileId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

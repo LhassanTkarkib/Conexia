@@ -11,6 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -50,7 +53,7 @@ class PostControllerTest {
     @Test
     void addPost() throws Exception {
         when(postService.addPost(postDTO)).thenReturn(postDTO);
-        mockMvc.perform(post("/post")
+        mockMvc.perform(post("/posts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isCreated());
@@ -59,7 +62,7 @@ class PostControllerTest {
     @Test
     void getPostById() throws Exception{
         when(postService.getPost(1)).thenReturn(postDTO);
-        mockMvc.perform(get("/post/1")
+        mockMvc.perform(get("/posts/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isOk());
@@ -69,7 +72,7 @@ class PostControllerTest {
     @Test
     void updatePost() throws Exception{
         when(postService.updatePost(postDTO,1)).thenReturn(postDTO);
-        mockMvc.perform(put("/post/1")
+        mockMvc.perform(put("/posts/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isOk());
@@ -78,7 +81,16 @@ class PostControllerTest {
     @Test
     void deletePost() throws Exception{
         when(postService.deletePost(1)).thenReturn(true);
-        mockMvc.perform(delete("/post/1")
+        mockMvc.perform(delete("/posts/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(postDTO)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getPostsByUser() throws Exception{
+        when(postService.getPostsByUser(1)).thenReturn(List.of(postDTO));
+        mockMvc.perform(get("/posts/user/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isOk());

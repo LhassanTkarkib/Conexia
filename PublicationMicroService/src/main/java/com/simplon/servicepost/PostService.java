@@ -3,6 +3,8 @@ package com.simplon.servicepost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -19,6 +21,9 @@ public class PostService implements Ipost {
     @Override
     public PostDTO addPost(PostDTO post) {
         if (post == null) throw new IllegalArgumentException("Post cannot be null");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        post.setDatePost(now.format(dateFormat));
         Post postEntity = postRepository.save(mapper.modelMapper().map(post, Post.class));
         return this.mapper.modelMapper().map(postEntity, PostDTO.class);
     }

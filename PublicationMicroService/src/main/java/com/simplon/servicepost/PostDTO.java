@@ -2,6 +2,8 @@ package com.simplon.servicepost;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @Setter
 @Getter
