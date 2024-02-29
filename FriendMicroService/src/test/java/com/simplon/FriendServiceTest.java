@@ -1,6 +1,5 @@
 package com.simplon;
 
-import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -41,7 +40,7 @@ public class FriendServiceTest {
         friendShip2.setFriendId(2L);
         friendShip2.setUserId(2L);
         friendShip2.setDateAddition(LocalDate.now());
-        friendShip2.setFriendId(5l);
+        friendShip2.setFriendId(5L);
         friendShip2.setDeleted(false);
         friendShip2.setStatus(StatusFriendEnum.ACCEPTED);
 

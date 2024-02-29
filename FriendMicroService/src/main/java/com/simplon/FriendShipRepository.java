@@ -10,8 +10,6 @@ import java.util.Optional;
 @Repository
 public interface FriendShipRepository extends JpaRepository<FriendShipEntity, Long> {
 
-    Optional<FriendShipEntity> findByFriendIdAndDeletedFalseAndStatus(long friendId, StatusFriendEnum status);
-
     Optional<FriendShipEntity> findByFriendshipIdAndFriendIdAndDeletedFalseAndStatusAllIgnoreCase(long friendshipId, long friendId, StatusFriendEnum status);
 
     List<FriendShipEntity> findByDeletedFalse();
