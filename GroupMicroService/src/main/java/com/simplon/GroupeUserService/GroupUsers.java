@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 @Table(name = "groupUsers")
-public class groupUsers {
+public class GroupUsers {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groupUser_seq")
@@ -21,7 +21,5 @@ public class groupUsers {
 
     private Long idGroup;
 
-    private Long idUser;
-
-    private Long idMembers;
+    private Long idUsers;
 }

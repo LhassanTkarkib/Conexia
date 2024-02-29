@@ -1,29 +1,14 @@
 package com.simplon.GroupeService;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-import org.springframework.stereotype.Service;
+@Mapper(componentModel = "spring")
+public interface GroupMapper {
 
-import java.util.function.Function;
+    GroupMapper INSTANCE = Mappers.getMapper(GroupMapper.class);
 
-@Service
-public class GroupMapper implements Function<Group,GroupDTO >{
-    @Override
-    public GroupDTO apply(Group group) {
-        GroupDTO groupDTO = new GroupDTO();
-        groupDTO.setIdGroup(group.getIdGroup());
-        groupDTO.setGroupName(group.getGroupName());
-        groupDTO.setGroupDescription(group.getGroupDescription());
-        groupDTO.setGroupDateCreation(group.getGroupDateCreation());
-        groupDTO.setPrivacy(TypePrivacy.PUBLIC);
-        return groupDTO;
+    GroupDTO groupToGroupDTO(Group group);
 
-    }
-    public Group toGroup(GroupDTO groupDTO){
-        Group group = new Group();
-        group.setIdGroup(groupDTO.getIdGroup());
-        group.setGroupName(groupDTO.getGroupName());
-        group.setGroupDescription(groupDTO.getGroupDescription());
-        group.setGroupDateCreation(groupDTO.getGroupDateCreation());
-        group.setPrivacy(groupDTO.getPrivacy());
-        return group;
-    }
+    Group groupDTOToGroup(GroupDTO groupDTO);
 }

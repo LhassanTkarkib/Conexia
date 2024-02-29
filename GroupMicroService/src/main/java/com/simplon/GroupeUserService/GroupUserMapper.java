@@ -1,28 +1,16 @@
 package com.simplon.GroupeUserService;
 
-import org.springframework.stereotype.Service;
+import com.simplon.GroupeService.Group;
+import com.simplon.GroupeService.GroupDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-import java.util.function.Function;
 
-@Service
-public class GroupUserMapper implements Function<groupUsers, GroupUserDTO>{
+@Mapper(componentModel = "spring")
+public interface GroupUserMapper {
+    com.simplon.GroupeUserService.GroupUserMapper INSTANCE = Mappers.getMapper(com.simplon.GroupeUserService.GroupUserMapper.class);
 
-    @Override
-    public GroupUserDTO apply(groupUsers groupUsers) {
-        GroupUserDTO groupUserDTO = new GroupUserDTO();
-        groupUserDTO.setIdGroupUser(groupUsers.getIdGroupUser());
-        groupUserDTO.setIdGroup(groupUsers.getIdGroup());
-        groupUserDTO.setIdUser(groupUsers.getIdUser());
-        groupUserDTO.setIdMembers(groupUsers.getIdMembers());
-        return groupUserDTO;
-    }
+    GroupUserDTO groupUserToGroupUserDTO(GroupUsers groupUser);
 
-    public groupUsers convertToEntity(GroupUserDTO groupUserDTO) {
-        groupUsers groupUsers = new groupUsers();
-        groupUsers.setIdGroupUser(groupUserDTO.getIdGroupUser());
-        groupUsers.setIdGroup(groupUserDTO.getIdGroup());
-        groupUsers.setIdUser(groupUserDTO.getIdUser());
-        groupUsers.setIdMembers(groupUserDTO.getIdMembers());
-        return groupUsers;
-    }
+    GroupUsers groupUserDTOToGroupUser(GroupUserDTO groupsUerDTO);
 }

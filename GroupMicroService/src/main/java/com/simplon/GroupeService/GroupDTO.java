@@ -13,6 +13,8 @@ public class GroupDTO {
 
     private Long idGroup;
 
+    private Long idAdmin;
+
     private String groupName;
 
     private TypePrivacy Privacy;

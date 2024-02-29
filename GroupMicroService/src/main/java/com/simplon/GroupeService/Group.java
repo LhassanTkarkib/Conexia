@@ -19,6 +19,8 @@ public class Group {
     @SequenceGenerator(name = "group_seq", sequenceName = "group_seq", allocationSize = 1)
     private Long idGroup;
 
+    private Long idAdmin;
+
     private String groupName;
 
     private TypePrivacy Privacy;

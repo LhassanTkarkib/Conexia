@@ -4,34 +4,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ServiceGroup implements IGroup{
+public class ServiceGroup implements IServiceGroup{
 
     @Autowired
     private GroupRepository groupRepository;
 
-
     public Group saveGroup(Group group) {
-        return groupRepository.save(group);
+        try {
+            return groupRepository.save(group);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save group");
+        }
     }
 
     public Group getGroupById(Long id) {
-        return groupRepository.findById(id).get();
+        Optional<Group> group = groupRepository.findById(id);
+        if (!group.isPresent()) {
+            throw new RuntimeException("Group id not found : " + id);
+        }
+        return group.get();
     }
 
     public List<Group> getAllGroups() {
-        return groupRepository.findAll();
-    }
-
-    public void deleteGroup(Long id) {
-        groupRepository.deleteById(id);
+        try {
+            return groupRepository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve groups");
+        }
     }
 
     public Group updateGroup(Group group) {
-        return groupRepository.save(group);
+        try {
+            return groupRepository.save(group);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update group");
+        }
     }
 
-
+    public void deleteGroup(Long id) {
+        try {
+            groupRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete group with id : " + id);
+        }
+    }
 
 }

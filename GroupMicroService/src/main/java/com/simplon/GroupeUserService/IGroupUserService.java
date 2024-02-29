@@ -4,8 +4,7 @@ import java.util.List;
 
 public interface IGroupUserService {
     GroupUserDTO saveGroupUser(GroupUserDTO groupUserDTO);
-    GroupUserDTO getGroupUserById(Long id);
-    List<GroupUserDTO> getAllGroupUsers();
-    void deleteGroupUser(Long id);
-    GroupUserDTO updateGroupUser(GroupUserDTO groupUserDTO);
+    List<GroupUserDTO> getAllUsersInGroup(Long groupId);
+    List<GroupUserDTO> getAllGroupsForUser(Long userId);
+    void deleteUserFromGroup(Long groupId, Long userId);
 }

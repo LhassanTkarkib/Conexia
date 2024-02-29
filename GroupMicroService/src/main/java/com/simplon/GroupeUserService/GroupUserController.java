@@ -1,5 +1,6 @@
 package com.simplon.GroupeUserService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,35 +11,45 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/group/user")
+@Slf4j
+@RequestMapping("/api/groupUser")
 public class GroupUserController {
 
     @Autowired
-    private ServiceGroupUser serviceGroupUser;
+    private IGroupUserService groupUserService;
 
-    @PostMapping
-    public ResponseEntity<GroupUserDTO> saveGroupUser(@RequestBody GroupUserDTO groupUserDTO) {
-        return new ResponseEntity<>(serviceGroupUser.saveGroupUser(groupUserDTO), HttpStatus.CREATED);
+    @GetMapping("/group/{groupId}/users")
+    public ResponseEntity<List<GroupUserDTO>> getAllUsersInGroup(@PathVariable Long groupId) {
+        log.info("getAllUsersInGroup : groupId = " + groupId);
+        List<GroupUserDTO> groupUsersDTOs = groupUserService.getAllUsersInGroup(groupId);
+        log.info("Retrieved " + groupUsersDTOs.size() + " users in group with id " + groupId);
+        return new ResponseEntity<>(groupUsersDTOs, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GroupUserDTO> getGroupUserById(@PathVariable Long id) {
-        return new ResponseEntity<>(serviceGroupUser.getGroupUserById(id), HttpStatus.OK);
+    @GetMapping("/user/{userId}/groups")
+    public ResponseEntity<List<GroupUserDTO>> getAllGroupsForUser(@PathVariable Long userId) {
+        log.info("getAllGroupsForUser : userId = " + userId);
+        List<GroupUserDTO> groupUsersDTOs = groupUserService.getAllGroupsForUser(userId);
+        log.info("Retrieved " + groupUsersDTOs.size() + " groups for user with id " + userId);
+        return new ResponseEntity<>(groupUsersDTOs, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity<List<GroupUserDTO>> getAllGroupUsers() {
-        return new ResponseEntity<>(serviceGroupUser.getAllGroupUsers(), HttpStatus.OK);
+    @PostMapping("/addGroup/{groupId}/user/{userId}")
+    public ResponseEntity<GroupUserDTO> addUserToGroup(@PathVariable Long groupId, @PathVariable Long userId) {
+        log.info("addUserToGroup : groupId = " + groupId + ", userId = " + userId);
+        GroupUserDTO groupUserDTO = new GroupUserDTO();
+        groupUserDTO.setIdGroup(groupId);
+        groupUserDTO.setIdUsers(userId);
+        GroupUserDTO newGroupUserDTO = groupUserService.saveGroupUser(groupUserDTO);
+        log.info("User with id " + userId + " has been successfully added to group with id " + groupId);
+        return new ResponseEntity<>(newGroupUserDTO, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGroupUser(@PathVariable Long id) {
-        serviceGroupUser.deleteGroupUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PutMapping
-    public ResponseEntity<GroupUserDTO> updateGroupUser(@RequestBody GroupUserDTO groupUserDTO) {
-        return new ResponseEntity<>(serviceGroupUser.updateGroupUser(groupUserDTO), HttpStatus.OK);
+    @DeleteMapping("/deleteGroup/{groupId}/user/{userId}")
+    public ResponseEntity<Void> deleteUserFromGroup(@PathVariable Long groupId, @PathVariable Long userId) {
+        log.info("deleteUserFromGroup : groupId = " + groupId + ", userId = " + userId);
+        groupUserService.deleteUserFromGroup(groupId, userId);
+        log.info("User with id " + userId + " has been successfully removed from group with id " + groupId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

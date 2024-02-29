@@ -15,8 +15,6 @@ public class GroupUserDTO {
 
     private Long idGroup;
 
-    private Long idUser;
-
-    private Long idMembers;
+    private Long idUsers;
 
 }
