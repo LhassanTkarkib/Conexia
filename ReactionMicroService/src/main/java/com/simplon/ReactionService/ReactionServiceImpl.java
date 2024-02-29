@@ -4,9 +4,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,11 +27,11 @@ public class ReactionServiceImpl implements ReactionService {
     }
 
     @Override
-    public List<ReactionDTO> getAllReactionsByPostId(Long postId) {
+    public Page<ReactionDTO> getAllReactionsByPostId(Long postId,Pageable pageable) {
         try {
             LOGGER.info("Fetching all reactions by post id");
-            List<Reaction> reactions = reactionRepository.findByPostId(postId);
-            return reactions.stream().map(reactionMapper::toDTO).collect(Collectors.toList());
+            Page<Reaction> reactions =  reactionRepository.findByPostId(postId,pageable);
+            return reactions.map(reactionMapper::toDTO);
 
         } catch (Exception e) {
             LOGGER.error("Error occurred while fetching all reaction by post id", e);
@@ -38,15 +40,15 @@ public class ReactionServiceImpl implements ReactionService {
     }
 
     @Override
-    public List<ReactionDTO> getAllReactionsByUseId(Long userId) {
-       try {
-           LOGGER.info("fetching all reactions by userId");
-           List<Reaction> reactions =reactionRepository.findByUserId(userId);
-          return reactions.stream().map(reactionMapper::toDTO).collect(Collectors.toList());
-       }catch(Exception e){
-           LOGGER.error("Error occurred while fetching all reaction by user id", e);
-           throw e;
-       }
+    public Page<ReactionDTO> getAllReactionsByUseId(Long userId, Pageable pageable) {
+        try {
+            LOGGER.info("Récupération de toutes les réactions par userId");
+            Page<Reaction> reactions =reactionRepository.findByUserId(userId, pageable);
+            return reactions.map(reactionMapper::toDTO);
+        } catch(Exception e) {
+            LOGGER.error("Une erreur s'est produite lors de la récupération de toutes les réactions par userId", e);
+            throw e;
+        }
     }
 
 
@@ -56,21 +58,38 @@ public class ReactionServiceImpl implements ReactionService {
             LOGGER.info("Service: Adding a new reaction to the post");
             // check if the user has already reacted to that post before adding a new reaction
             Reaction reaction = reactionMapper.toEntity(reactionDTO);
-            Optional<Reaction> reactionAlreadyExist = reactionRepository.findReactionByUserIdAndPostId(reaction.getUserId(), reaction.getPostId());
-            if (reactionAlreadyExist.isPresent()) {
-                throw new EntityNotFoundException("The user already reacted to that post");
-            }
             Reaction newReaction = reactionRepository.save(reaction);
             return reactionMapper.toDTO(newReaction);
-        } catch (EntityNotFoundException e) {
-            LOGGER.warn("User already reacted to the post: {}", e.getMessage());
-            throw e;
+
         } catch (Exception e) {
             LOGGER.error("An error has occurred while adding a new reaction to the post", e);
             throw e;
         }
     }
 
+
+
+
+    @Override
+    public ReactionDTO updateReaction(ReactionDTO reactionDTO) {
+        try {
+            LOGGER.info("Mise à jour de la réaction");
+            Reaction existingReaction = reactionMapper.toEntity(reactionDTO);
+            Optional<Reaction> existingReactionOptional = reactionRepository.findReactionByUserIdAndPostId(existingReaction.getUserId(), existingReaction.getPostId());
+
+            if (existingReactionOptional.isPresent()) {
+                Reaction existingReactionFromDb = existingReactionOptional.get();
+                existingReactionFromDb.setTypeReaction(reactionDTO.getTypeReaction());
+                existingReactionFromDb.setDateDeReaction(reactionDTO.getDateDeReaction());
+                return reactionMapper.toDTO(reactionRepository.save(existingReactionFromDb));
+            } else {
+                return addReactionToPost(reactionDTO);
+            }
+        } catch (Exception e) {
+            LOGGER.error("A problem has occurred while trying to update this reaction", e);
+            throw new RuntimeException("Failed to update reaction", e);
+        }
+    }
 
     @Override
     public void removeReactionFromAPost(Long id) {
@@ -87,27 +106,4 @@ public class ReactionServiceImpl implements ReactionService {
         }
 
     }
-
-    @Override
-    public ReactionDTO updateReaction(Long id, ReactionDTO reactionDTO) {
-        try {
-            LOGGER.info("Updating reaction");
-            Reaction existingReaction = reactionRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Reaction with id " + id + " not found"));
-            if (!reactionRepository.findReactionByUserIdAndPostId(existingReaction.getUserId(), existingReaction.getPostId()).isPresent()) {
-                throw new EntityNotFoundException("The user didn't react to that post");
-            }
-
-            existingReaction.setTypeReaction(reactionDTO.getTypeReaction());
-            reactionRepository.save(existingReaction);
-            return reactionMapper.toDTO(existingReaction);
-        } catch (EntityNotFoundException e) {
-            LOGGER.error("Reaction not found: " + e.getMessage());
-            throw e;
-        } catch (Exception e) {
-            LOGGER.error("A problem has occurred while trying to update this reaction", e);
-            throw new RuntimeException("Failed to update reaction", e);
-        }
-    }
-
 }

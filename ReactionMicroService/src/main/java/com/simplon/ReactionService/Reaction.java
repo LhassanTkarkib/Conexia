@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +24,7 @@ public class Reaction {
     private Long postId;
     @Enumerated(EnumType.STRING)
     private TypeReaction typeReaction;
-
+    private LocalDateTime dateDeReaction;
     public TypeReaction getTypeReaction() {
         return typeReaction;
     }

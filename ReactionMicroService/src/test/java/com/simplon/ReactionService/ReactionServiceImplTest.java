@@ -6,8 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -30,40 +34,34 @@ class ReactionServiceImplTest {
         MockitoAnnotations.initMocks(this);
     }
 
+   @Test
+    void testGetAllReactionsByPostId() {
+        long postId = 1L;
+        Pageable pageable = Pageable.unpaged();
+        when(reactionRepository.findByPostId(eq(postId), any(Pageable.class)))
+                .thenReturn(Page.empty());
+        Page<ReactionDTO> result = reactionService.getAllReactionsByPostId(postId, pageable);
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(reactionRepository, times(1)).findByPostId(eq(postId), any(Pageable.class));
+    }
     @Test
-    void getAllReactionsByPostId() {
-        // Arrange
-        Long postId = 1L;
-        ReactionDTO reactionDTO = new ReactionDTO(1L, 2L, 1L, TypeReaction.LIKE);
-        List<Reaction> reactions = Arrays.asList(new Reaction(), new Reaction());
+    void testGetAllReactionsByUserId() {
 
-        when(reactionRepository.findByPostId(postId)).thenReturn(reactions);
-        when(reactionMapper.toDTO(any(Reaction.class))).thenReturn(reactionDTO);
-
-        List<ReactionDTO> result = reactionService.getAllReactionsByPostId(postId);
-
-        assertEquals(reactions.size(), result.size());
-        verify(reactionMapper, times(reactions.size())).toDTO(any(Reaction.class));
+        long userId = 1L;
+        Pageable pageable = Pageable.unpaged();
+        when(reactionRepository.findByUserId(eq(userId), any(Pageable.class)))
+                .thenReturn(Page.empty());
+        Page<ReactionDTO> result = reactionService.getAllReactionsByUseId(userId, pageable);
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(reactionRepository, times(1)).findByUserId(eq(userId), any(Pageable.class));
     }
 
-    @Test
-    void getAllReactionsByUserId() {
-        Long userId = 2L;
-        ReactionDTO reactionDTO = new ReactionDTO(1L, 2L, 1L, TypeReaction.LIKE);
-        List<Reaction> reactions = Arrays.asList(new Reaction(), new Reaction());
-
-        when(reactionRepository.findByUserId(userId)).thenReturn(reactions);
-        when(reactionMapper.toDTO(any(Reaction.class))).thenReturn(reactionDTO);
-
-        List<ReactionDTO> result = reactionService.getAllReactionsByUseId(userId);
-
-        assertEquals(reactions.size(), result.size());
-        verify(reactionMapper, times(reactions.size())).toDTO(any(Reaction.class));
-    }
 
     @Test
     void addReactionToPost() {
-        ReactionDTO reactionDTO = new ReactionDTO(1L, 2L, 1L, TypeReaction.LIKE);
+        ReactionDTO reactionDTO = new ReactionDTO(1L, 2L, 1L, TypeReaction.LIKE,LocalDateTime.now());
         Reaction reaction = new Reaction();
         when(reactionRepository.findReactionByUserIdAndPostId(anyLong(), anyLong()))
                 .thenReturn(Optional.of(new Reaction()));
@@ -76,28 +74,18 @@ class ReactionServiceImplTest {
 
     @Test
     void removeReactionFromAPost_Success() {
-        // Arrange
         Long reactionId = 1L;
         Reaction existingReaction = new Reaction();
         existingReaction.setId(reactionId);
-
         when(reactionRepository.findById(reactionId)).thenReturn(Optional.of(existingReaction));
-
-        // Act
         assertDoesNotThrow(() -> reactionService.removeReactionFromAPost(reactionId));
-
-        // Assert
         verify(reactionRepository, times(1)).deleteById(reactionId);
     }
 
     @Test
     void removeReactionFromAPost_WhenReactionNotFound() {
-        // Arrange
         Long reactionId = 1L;
-
         when(reactionRepository.findById(reactionId)).thenReturn(Optional.empty());
-
-        // Act and Assert
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
                 () -> reactionService.removeReactionFromAPost(reactionId));
 
@@ -107,21 +95,24 @@ class ReactionServiceImplTest {
 
 
     @Test
-    void updateReaction() {
-        Long id = 1L;
-        ReactionDTO reactionDTO = new ReactionDTO(1L, 2L, 1L, TypeReaction.LIKE);
+    void testUpdateReaction() {
+        ReactionDTO reactionDTO = new ReactionDTO();
         Reaction existingReaction = new Reaction();
-        existingReaction.setId(id);
-
-        when(reactionRepository.findById(id)).thenReturn(Optional.of(existingReaction));
-        when(reactionMapper.toEntity(reactionDTO)).thenReturn(existingReaction);
-        when(reactionMapper.toDTO(existingReaction)).thenReturn(reactionDTO);
-
-        ReactionDTO result = reactionService.updateReaction(id, reactionDTO);
-
-        assertEquals(reactionDTO, result);
-        verify(reactionRepository, times(1)).findById(id);
-        verify(reactionMapper, times(1)).toEntity(reactionDTO);
-        verify(reactionMapper, times(1)).toDTO(existingReaction);
+        existingReaction.setUserId(1L);
+        existingReaction.setPostId(1L);
+        Optional<Reaction> existingReactionOptional = Optional.of(existingReaction);
+        when(reactionMapper.toEntity(eq(reactionDTO))).thenReturn(existingReaction);
+        when(reactionRepository.findReactionByUserIdAndPostId(eq(1L), eq(1L))).thenReturn(existingReactionOptional);
+        when(reactionRepository.save(eq(existingReaction))).thenReturn(existingReaction);
+        when(reactionMapper.toDTO(eq(existingReaction))).thenReturn(reactionDTO);
+        ReactionDTO result = reactionService.updateReaction(reactionDTO);
+        assertNotNull(result);
+        verify(reactionMapper, times(1)).toEntity(eq(reactionDTO));
+        verify(reactionRepository, times(1)).findReactionByUserIdAndPostId(eq(1L), eq(1L));
+        verify(reactionRepository, times(1)).save(eq(existingReaction));
+        verify(reactionMapper, times(1)).toDTO(eq(existingReaction));
     }
+
+
+
 }

@@ -3,6 +3,10 @@ package com.simplon.ReactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +25,19 @@ public class ReactionController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<List<ReactionDTO>> getAllReactionsByPostId(@PathVariable long postId){
-        List<ReactionDTO> reactionDTOS=reactionService.getAllReactionsByPostId(postId);
+    public ResponseEntity<Page<ReactionDTO>> getAllReactionsByPostId(@PathVariable long postId , @RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size){
+        Sort sort = Sort.by("dateDeReaction").descending();
+        Pageable pageable = PageRequest.of(page,size,sort);
+        Page<ReactionDTO> reactionDTOS=reactionService.getAllReactionsByPostId(postId,pageable);
         LOGGER.info("reactions fetched successfuly ");
         return new ResponseEntity<>(reactionDTOS, HttpStatus.OK);
 
     }
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ReactionDTO>> getAllReactionsByUserId(@PathVariable long userId){
-        List<ReactionDTO> reactionDTOS=reactionService.getAllReactionsByUseId(userId);
+    public ResponseEntity<Page<ReactionDTO>> getAllReactionsByUserId(@PathVariable long userId, @RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size){
+        Sort sort = Sort.by("dateDeReaction").descending();
+        Pageable pageable = PageRequest.of(page,size,sort);
+        Page<ReactionDTO> reactionDTOS=reactionService.getAllReactionsByUseId(userId,pageable);
         LOGGER.info("reactions fetched successfuly ");
         return new ResponseEntity<>(reactionDTOS, HttpStatus.OK);
 
@@ -40,7 +48,7 @@ public class ReactionController {
             @RequestBody ReactionDTO reactionDTO
     ){
         LOGGER.info("Controller: Adding reaction to post");
-        ReactionDTO addedReaction = reactionService.addReactionToPost(reactionDTO);
+        ReactionDTO addedReaction = reactionService.updateReaction(reactionDTO);
         return new ResponseEntity<>(addedReaction, HttpStatus.CREATED);
     }
 
@@ -51,10 +59,10 @@ public class ReactionController {
         return new ResponseEntity<>("reaction deleted successfully", HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ReactionDTO> updatingAReaction(@PathVariable Long id, @RequestBody ReactionDTO reactionDTO){
-        LOGGER.info("Controller: Updating a  reaction to post");
-        ReactionDTO updatedReaction =reactionService.updateReaction(id,reactionDTO);
-        return new ResponseEntity<>(updatedReaction,HttpStatus.OK);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<ReactionDTO> updatingAReaction(@PathVariable Long id, @RequestBody ReactionDTO reactionDTO){
+//        LOGGER.info("Controller: Updating a  reaction to post");
+//        ReactionDTO updatedReaction =reactionService.updateReaction(id,reactionDTO);
+//        return new ResponseEntity<>(updatedReaction,HttpStatus.OK);
+//    }
 }
