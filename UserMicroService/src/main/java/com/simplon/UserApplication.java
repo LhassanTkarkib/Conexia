@@ -2,16 +2,12 @@ package com.simplon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-/**
- * Hello world!
- */
 @SpringBootApplication
-public class Friend {
+@EnableDiscoveryClient
+public class UserApplication {
     public static void main(String[] args) {
-
-        System.out.println("Hello World!");
-
-        SpringApplication.run(Friend.class, args);
+        SpringApplication.run(UserApplication.class, args);
     }
 }
