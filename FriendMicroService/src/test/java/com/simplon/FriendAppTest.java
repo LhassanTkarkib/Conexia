@@ -7,13 +7,13 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class FriendTest extends TestCase {
+public class FriendAppTest extends TestCase {
     /**
      * Create the test case
      *
      * @param testName name of the test case
      */
-    public FriendTest(String testName) {
+    public FriendAppTest(String testName) {
         super(testName);
     }
 
@@ -21,7 +21,7 @@ public class FriendTest extends TestCase {
      * @return the suite of tests being tested
      */
     public static Test suite() {
-        return new TestSuite(FriendTest.class);
+        return new TestSuite(FriendAppTest.class);
     }
 
     /**
