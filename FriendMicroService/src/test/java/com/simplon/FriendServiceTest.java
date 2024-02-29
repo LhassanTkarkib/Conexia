@@ -28,28 +28,28 @@ public class FriendServiceTest {
     void testGetAllFriendRequestedAcceptedRejected() {
 
         FriendShipEntity friendShip1 = new FriendShipEntity();
-        friendShip1.setFriendId(1L);
+        friendShip1.setFriendshipId(1L);
         friendShip1.setUserId(1L);
-        friendShip1.setDateAddition(LocalDate.now());
         friendShip1.setFriendId(5L);
         friendShip1.setDeleted(false);
+        friendShip1.setDateAddition(LocalDate.now());
         friendShip1.setStatus(StatusFriendEnum.REQUESTED);
 
 
         FriendShipEntity friendShip2 = new FriendShipEntity();
-        friendShip2.setFriendId(2L);
+        friendShip2.setFriendshipId(2L);
         friendShip2.setUserId(2L);
-        friendShip2.setDateAddition(LocalDate.now());
         friendShip2.setFriendId(5L);
         friendShip2.setDeleted(false);
+        friendShip2.setDateAddition(LocalDate.now());
         friendShip2.setStatus(StatusFriendEnum.ACCEPTED);
 
         FriendShipEntity friendShip3 = new FriendShipEntity();
-        friendShip3.setFriendId(3L);
-        friendShip3.setUserId(3L);
-        friendShip3.setDateAddition(LocalDate.now());
+        friendShip3.setFriendshipId(3L);
+        friendShip3.setUserId(6L);
         friendShip3.setFriendId(2L);
         friendShip3.setDeleted(false);
+        friendShip3.setDateAddition(LocalDate.now());
         friendShip3.setStatus(StatusFriendEnum.REJECTED);
 
         List<FriendShipEntity> mockFriendShip = Arrays.asList(friendShip1, friendShip2,friendShip3);
@@ -57,28 +57,28 @@ public class FriendServiceTest {
 
 
         FriendShipDto friendShipDto1 = new FriendShipDto();
-        friendShipDto1.setFriendId(1L);
+        friendShipDto1.setFriendshipId(1L);
         friendShipDto1.setUserId(1L);
-        friendShipDto1.setDateAddition(LocalDate.now());
         friendShipDto1.setFriendId(5L);
         friendShipDto1.setDeleted(false);
+        friendShipDto1.setDateAddition(LocalDate.now());
         friendShipDto1.setStatus(StatusFriendEnum.REQUESTED);
 
 
         FriendShipDto friendShipDto2 = new FriendShipDto();
-        friendShipDto2.setFriendId(2L);
+        friendShipDto2.setFriendshipId(2L);
         friendShipDto2.setUserId(2L);
-        friendShipDto2.setDateAddition(LocalDate.now());
         friendShipDto2.setFriendId(5L);
         friendShipDto2.setDeleted(false);
+        friendShipDto2.setDateAddition(LocalDate.now());
         friendShipDto2.setStatus(StatusFriendEnum.ACCEPTED);
 
         FriendShipDto friendShipDto3 = new FriendShipDto();
+        friendShipDto3.setFriendshipId(3L);
+        friendShipDto3.setUserId(6L);
         friendShipDto3.setFriendId(2L);
-        friendShipDto3.setUserId(2L);
-        friendShipDto3.setDateAddition(LocalDate.now());
-        friendShipDto3.setFriendId(5L);
         friendShipDto3.setDeleted(true);
+        friendShipDto3.setDateAddition(LocalDate.now());
         friendShipDto3.setStatus(StatusFriendEnum.REJECTED);
 
         when(modelMapper.map(friendShip1, FriendShipDto.class)).thenReturn(friendShipDto1);
