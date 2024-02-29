@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: group-microservice-db
+    image: postgres:16
+    environment:
+      POSTGRES_USER: group_microservice
+      POSTGRES_PASSWORD: group_microservice
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5225:5432"
+
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
