@@ -1,9 +1,15 @@
 server:
   port: 5050
 
+eureka:
+    client:
+        serviceUrl:
+          defaultZone: http://localhost:8761/eureka
+
+
 spring:
   application:
-    name: user-microservice
+    name: user
 
   datasource:
     url: jdbc:postgresql://localhost:5222/user_microservice

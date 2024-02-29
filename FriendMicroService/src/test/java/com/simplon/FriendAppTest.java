@@ -5,15 +5,15 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple Group.
+ * Unit test for simple App.
  */
-public class GroupTest extends TestCase {
+public class FriendAppTest extends TestCase {
     /**
      * Create the test case
      *
      * @param testName name of the test case
      */
-    public GroupTest(String testName) {
+    public FriendAppTest(String testName) {
         super(testName);
     }
 
@@ -21,7 +21,7 @@ public class GroupTest extends TestCase {
      * @return the suite of tests being tested
      */
     public static Test suite() {
-        return new TestSuite(GroupTest.class);
+        return new TestSuite(FriendAppTest.class);
     }
 
     /**
@@ -30,4 +30,5 @@ public class GroupTest extends TestCase {
     public void testApp() {
         assertTrue(true);
     }
+
 }
