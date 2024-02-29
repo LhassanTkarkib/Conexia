@@ -9,9 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/media")
 public class MediaController {
-    private MediaService mediaService;
+    private IMedia mediaService;
     @Autowired
-    public MediaController(MediaService mediaService) {
+    public MediaController(IMedia mediaService) {
         this.mediaService = mediaService;
     }
 
@@ -25,8 +25,7 @@ public class MediaController {
     }
 
    @DeleteMapping("/{fileId}")
-    public ResponseEntity<Void> deleteMedia(@PathVariable(value = "fileId") long fileId) {
-        mediaService.deleteMedia(fileId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Boolean> deleteMedia(@PathVariable(value = "fileId") long fileId) {
+        return new ResponseEntity<>(mediaService.deleteMedia(fileId),HttpStatus.NO_CONTENT);
     }
 }

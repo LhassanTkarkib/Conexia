@@ -14,28 +14,37 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(MediaController.class)
 @ExtendWith(SpringExtension.class)
 class MediaControllerTest {
+    @Autowired
+    MockMvc mockMvc;
 
     @MockBean
     private IMedia mediaService;
     @MockBean
     MapperConfig mapperConfig;
-    @Autowired
-    MockMvc mockMvc;
+
     private MockMultipartFile file;
 
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
     }
     @Test
-    void getAllMedia() {
+    void getAllMedia() throws Exception {
+        MediaDTO mediaDTO = new MediaDTO();
+        mediaDTO.setName("13.png");
+        mediaDTO.setFileUrl("http://localhost:8080/MediaMicroService/uploads/13.png");
+        mediaDTO.setPostId(1L);
+        mediaDTO.setTypeFile(TypeFile.IMAGE);
+        when(mediaService.listMedia()).thenReturn(List.of(mediaDTO));
+        mockMvc.perform(MockMvcRequestBuilders.get("/media"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
@@ -46,10 +55,13 @@ class MediaControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/media/1")
                         .file(file))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
-
     }
 
     @Test
-    void deleteMedia() {
+    void deleteMedia() throws Exception {
+        long fileId = 1L; // Example fileId
+        when(mediaService.deleteMedia(fileId)).thenReturn(true);
+        mockMvc.perform(MockMvcRequestBuilders.delete("/media/{fileId}", fileId))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }
