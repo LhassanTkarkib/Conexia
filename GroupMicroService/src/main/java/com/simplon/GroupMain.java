@@ -10,6 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableWebMvc
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = {"com.simplon"})
+@EnableDiscoveryClient
 public class GroupMain {
     public static void main(String[] args) {
         SpringApplication.run(GroupMain.class, args);
