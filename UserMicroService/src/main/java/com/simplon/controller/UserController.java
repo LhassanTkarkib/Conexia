@@ -68,4 +68,11 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/friends")
+    public ResponseEntity<String> getAllacceptedFriends() {
+        logger.info("Fetching all accepted friends");
+        String friends = userService.getAllacceptedFriends();
+        return new ResponseEntity<>(friends, HttpStatus.OK);
+    }
 }
