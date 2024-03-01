@@ -24,7 +24,4 @@ public interface FriendShipService {
     FriendShipEntity searchSpecificFriend(long userId, long friendId, StatusFriendEnum status) throws ChangeSetPersister.NotFoundException;
 
 
-
-
-
 }
