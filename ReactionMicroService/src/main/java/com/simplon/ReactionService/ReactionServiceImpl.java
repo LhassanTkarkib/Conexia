@@ -19,11 +19,13 @@ public class ReactionServiceImpl implements ReactionService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactionServiceImpl.class);
     private final ReactionRepository reactionRepository;
     private final ReactionMapper reactionMapper;
+    private final PublicationClient publicationClient;
 
     @Autowired
-    public ReactionServiceImpl(ReactionRepository reactionRepository, ReactionMapper reactionMapper) {
+    public ReactionServiceImpl(ReactionRepository reactionRepository, ReactionMapper reactionMapper,PublicationClient publicationClient) {
         this.reactionMapper = reactionMapper;
         this.reactionRepository = reactionRepository;
+        this.publicationClient=publicationClient;
     }
 
     @Override
@@ -51,7 +53,6 @@ public class ReactionServiceImpl implements ReactionService {
         }
     }
 
-
     @Override
     public ReactionDTO addReactionToPost(ReactionDTO reactionDTO) {
         try {
@@ -66,8 +67,6 @@ public class ReactionServiceImpl implements ReactionService {
             throw e;
         }
     }
-
-
 
 
     @Override
