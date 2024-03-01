@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/media")
 public class MediaController {
@@ -25,7 +28,12 @@ public class MediaController {
     }
 
    @DeleteMapping("/{fileId}")
-    public ResponseEntity<Boolean> deleteMedia(@PathVariable(value = "fileId") long fileId) {
-        return new ResponseEntity<>(mediaService.deleteMedia(fileId),HttpStatus.NO_CONTENT);
+    public ResponseEntity<Map<String,Boolean>> deleteMedia(@PathVariable(value = "fileId") long fileId) {
+        Map<String,Boolean> response=new HashMap<>();
+        if(mediaService.deleteMedia(fileId))
+            response.put("Deleted",true);
+        else
+            response.put("Deleted",true);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }
