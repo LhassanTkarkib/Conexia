@@ -43,7 +43,7 @@ class MediaControllerTest {
         mediaDTO.setPostId(1L);
         mediaDTO.setTypeFile(TypeFile.IMAGE);
         when(mediaService.listMedia()).thenReturn(List.of(mediaDTO));
-        mockMvc.perform(MockMvcRequestBuilders.get("/media"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/media"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -52,7 +52,7 @@ class MediaControllerTest {
         // Create a mock multipart file
         file = new MockMultipartFile("file", "13.png", MediaType.IMAGE_PNG_VALUE, "Hello, World!".getBytes(StandardCharsets.UTF_8));
         when(mediaService.addMedia(file, 1L)).thenReturn(new MediaDTO());
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/media/1")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/api/v1/media/1")
                         .file(file))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
@@ -61,7 +61,7 @@ class MediaControllerTest {
     void deleteMedia() throws Exception {
         long fileId = 1L; // Example fileId
         when(mediaService.deleteMedia(fileId)).thenReturn(true);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/media/{fileId}", fileId))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/media/{fileId}", fileId))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 }

@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/media")
+@RequestMapping("/api/v1/media")
 public class MediaController {
     private IMedia mediaService;
     @Autowired
@@ -19,7 +20,7 @@ public class MediaController {
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<MediaDTO>> getAllMedia() {
+    public ResponseEntity<List<MediaDTO>> getAllMedia() {
         return new ResponseEntity<>(mediaService.listMedia(), HttpStatus.OK);
     }
     @PostMapping("/{postId}")

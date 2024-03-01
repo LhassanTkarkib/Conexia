@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/posts")
+@RequestMapping("/api/v1/posts")
 public class PostController {
 
     private Ipost postService;

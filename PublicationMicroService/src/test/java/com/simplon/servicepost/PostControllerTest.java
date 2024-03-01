@@ -53,7 +53,7 @@ class PostControllerTest {
     @Test
     void addPost() throws Exception {
         when(postService.addPost(postDTO,null)).thenReturn(postDTO);
-        mockMvc.perform(post("/posts")
+        mockMvc.perform(post("/api/v1/posts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isCreated());
@@ -62,7 +62,7 @@ class PostControllerTest {
     @Test
     void getPostById() throws Exception{
         when(postService.getPost(1)).thenReturn(postDTO);
-        mockMvc.perform(get("/posts/1")
+        mockMvc.perform(get("/api/v1/posts/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isOk());
@@ -72,7 +72,7 @@ class PostControllerTest {
     @Test
     void updatePost() throws Exception{
         when(postService.updatePost(postDTO,1)).thenReturn(postDTO);
-        mockMvc.perform(put("/posts/1")
+        mockMvc.perform(put("/api/v1/posts/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isOk());
@@ -81,7 +81,7 @@ class PostControllerTest {
     @Test
     void deletePost() throws Exception{
         when(postService.deletePost(1)).thenReturn(true);
-        mockMvc.perform(delete("/posts/1")
+        mockMvc.perform(delete("/api/v1/posts/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isOk());
@@ -90,7 +90,7 @@ class PostControllerTest {
     @Test
     void getPostsByUser() throws Exception{
         when(postService.getPostsByUser(1)).thenReturn(List.of(postDTO));
-        mockMvc.perform(get("/posts/user/1")
+        mockMvc.perform(get("/api/v1/posts/user/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
                 .andExpect(status().isOk());
