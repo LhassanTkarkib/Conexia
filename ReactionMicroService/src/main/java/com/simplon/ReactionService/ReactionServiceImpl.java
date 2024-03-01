@@ -51,7 +51,6 @@ public class ReactionServiceImpl implements ReactionService {
         }
     }
 
-
     @Override
     public ReactionDTO addReactionToPost(ReactionDTO reactionDTO) {
         try {
@@ -66,8 +65,6 @@ public class ReactionServiceImpl implements ReactionService {
             throw e;
         }
     }
-
-
 
 
     @Override

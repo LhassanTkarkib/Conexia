@@ -1,6 +1,8 @@
 package com.simplon.service.impl;
 
 import com.simplon.exception.CustomNotFoundException;
+import com.simplon.friendship.FriendShipDto;
+import com.simplon.friendship.FriendshipClient;
 import com.simplon.mapper.UserMapper;
 import com.simplon.model.dto.UserDto;
 import com.simplon.model.entity.UserEntity;
@@ -27,12 +29,16 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final FriendshipClient friendshipClient;
     private final UserMapper userMapper;
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository,
+                           UserMapper userMapper,
+                           FriendshipClient friendshipClient) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.friendshipClient = friendshipClient;
     }
 
     @Override
@@ -110,5 +116,12 @@ public class UserServiceImpl implements UserService {
         logger.info("Fetching all users with pagination");
         Page<UserEntity> userEntityPage = userRepository.findAll(pageable);
         return userEntityPage.map(userMapper::userEntityToUserDto);
+    }
+
+    @Override
+    public String getAllacceptedFriends() {
+        logger.info("Fetching all accepted friends");
+        List<FriendShipDto> friendShipDtoList = friendshipClient.getAllFriendAccepted().getBody();
+        return friendShipDtoList.toString();
     }
 }

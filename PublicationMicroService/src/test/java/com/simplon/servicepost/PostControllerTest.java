@@ -52,7 +52,7 @@ class PostControllerTest {
 
     @Test
     void addPost() throws Exception {
-        when(postService.addPost(postDTO)).thenReturn(postDTO);
+        when(postService.addPost(postDTO,null)).thenReturn(postDTO);
         mockMvc.perform(post("/posts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(postDTO)))
