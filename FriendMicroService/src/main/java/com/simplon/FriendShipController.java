@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 
@@ -71,7 +70,7 @@ public class FriendShipController {
 
 
     @GetMapping("/search-Specific-friend")
-    public ResponseEntity<FriendShipEntity> searchSpecificFriend(
+    public ResponseEntity<FriendShipDto> searchSpecificFriend(
             @RequestParam("userId") long userId,
             @RequestParam("friendId") long friendId,
             @RequestParam("status") StatusFriendEnum status) throws ChangeSetPersister.NotFoundException {
