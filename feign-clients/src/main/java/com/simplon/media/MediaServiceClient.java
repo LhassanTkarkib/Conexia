@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @FeignClient(name = "MEDIA")
 public interface MediaServiceClient {
-    @GetMapping
-     ResponseEntity<Iterable<MediaDTO>> getAllMedia();
+    @GetMapping("/api/v1/media")
+     ResponseEntity<List<MediaDTO>> getAllMedia();
     @PostMapping("/api/v1/media/{postId}")
      ResponseEntity<MediaDTO> addMedia(@RequestParam("file") MultipartFile file, @PathVariable(value = "postId") long postId);
 
