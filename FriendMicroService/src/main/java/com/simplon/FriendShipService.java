@@ -21,10 +21,7 @@ public interface FriendShipService {
 
     void deleteFriendByUserIdAndFriendId(long userId,long friendId) throws ChangeSetPersister.NotFoundException;
 
-    FriendShipEntity searchSpecificFriend(long userId, long friendId, StatusFriendEnum status) throws ChangeSetPersister.NotFoundException;
-
-
-
+    FriendShipDto searchSpecificFriend(long userId, long friendId, StatusFriendEnum status) throws ChangeSetPersister.NotFoundException;
 
 
 }

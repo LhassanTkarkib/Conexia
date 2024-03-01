@@ -10,7 +10,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *
  */
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients(
+        basePackages = "com.simplon"
+)
 @EnableDiscoveryClient
 public class Publication
 {
