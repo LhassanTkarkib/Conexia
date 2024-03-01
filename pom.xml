@@ -28,6 +28,7 @@
         <module>FriendMicroService</module>
         <module>MediaMicroService</module>
         <module>eureka-server</module>
+        <module>feign-clients</module>
     </modules>
 
     <properties>
@@ -76,6 +77,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Open Feign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
     </dependencies>
 

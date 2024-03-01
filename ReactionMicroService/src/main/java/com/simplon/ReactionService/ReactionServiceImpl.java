@@ -19,13 +19,11 @@ public class ReactionServiceImpl implements ReactionService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReactionServiceImpl.class);
     private final ReactionRepository reactionRepository;
     private final ReactionMapper reactionMapper;
-    private final PublicationClient publicationClient;
 
     @Autowired
-    public ReactionServiceImpl(ReactionRepository reactionRepository, ReactionMapper reactionMapper,PublicationClient publicationClient) {
+    public ReactionServiceImpl(ReactionRepository reactionRepository, ReactionMapper reactionMapper) {
         this.reactionMapper = reactionMapper;
         this.reactionRepository = reactionRepository;
-        this.publicationClient=publicationClient;
     }
 
     @Override

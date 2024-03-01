@@ -36,20 +36,20 @@ class ServicePostTest {
 
     @Test
     void addPost() {
-        post= postService.addPost(postDTO);
+        post= postService.addPost(postDTO,null);
       assertEquals(post.getContent(),postDTO.getContent());
     }
 
     @Test
     void deletePost() {
-         post= postService.addPost(postDTO);
+         post= postService.addPost(postDTO,null);
         boolean result = postService.deletePost(post.getPostId());
         assertTrue(result);
     }
 
     @Test
     void updatePost() {
-        post= postService.addPost(postDTO);
+        post= postService.addPost(postDTO,null);
         String content=post.getContent();
         post.setContent("helloworld");
         post.setDatePost("2021-08-01");
@@ -59,20 +59,20 @@ class ServicePostTest {
 
     @Test
     void getPost() {
-         post= postService.addPost(postDTO);
+         post= postService.addPost(postDTO,null);
         assertEquals(postService.getPost(post.getPostId()).getContent(),post.getContent());
     }
 
     @Test
     void getAllPosts() {
-        post= postService.addPost(postDTO);
+        post= postService.addPost(postDTO,null);
         List<PostDTO> postDTOS=this.postService.getAllPosts();
         assertNotNull(postDTOS);
     }
 
     @Test
     void getPostsByUser() {
-        post= postService.addPost(postDTO);
+        post= postService.addPost(postDTO,null);
         List<PostDTO> postDTOS=this.postService.getPostsByUser(post.getUserId());
         assertNotNull(postDTOS);
     }
