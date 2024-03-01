@@ -1,5 +1,7 @@
 package com.simplon.servicepost;
 
+import com.simplon.media.MediaDTO;
+import com.simplon.media.MediaServiceClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,19 +15,22 @@ import java.util.List;
 @Service
 public class PostService implements Ipost {
     private PostRepository postRepository;
+    private final MediaServiceClient mediaServiceClient;
     private MapperConfig mapper;
     @Autowired
-    PostService(PostRepository postRepository, MapperConfig mapper){
+    PostService(PostRepository postRepository, MediaServiceClient mediaServiceClient, MapperConfig mapper){
         this.postRepository = postRepository;
+        this.mediaServiceClient = mediaServiceClient;
         this.mapper = mapper;
     }
     @Override
     public PostDTO addPost(PostDTO post,MultipartFile file) {
         if (post == null) throw new IllegalArgumentException("Post cannot be null");
-//        if(file != null){
-//            Media media = mediaServiceClient.addmedia(file, post.getPostId());
-//            System.out.println(media);
-//        }
+        System.out.println(post);
+       if(file != null){
+           MediaDTO media = mediaServiceClient.addMedia(file, post.getPostId()).getBody();
+            System.out.println(media);
+        }
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         post.setDatePost(now.format(dateFormat));

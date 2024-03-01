@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/media")
+@RequestMapping("/api/v1/media")
 public class MediaController {
     private IMedia mediaService;
     @Autowired
