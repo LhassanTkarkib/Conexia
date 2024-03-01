@@ -14,6 +14,7 @@ public interface Ipost {
     PostDTO getPost(long postId);
     List<PostDTO> getAllPosts();
     List<PostDTO> getPostsByUser(long userId);
+    List<PostDTO> getPostsByGroup(long groupId);
     boolean harddeletePost(long postId);
 
 }
