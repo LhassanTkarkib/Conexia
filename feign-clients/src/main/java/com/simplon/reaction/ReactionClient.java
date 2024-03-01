@@ -8,15 +8,15 @@ import org.springframework.data.domain.Page;
 
 @FeignClient(name = "REACTION")
 public interface ReactionClient {
-    @GetMapping("/{postId}")
+    @GetMapping("/api/v1/reaction/{postId}")
      ResponseEntity<Page<ReactionDTO>> getAllReactionsByPostId(@PathVariable long postId , @RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size);
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/api/v1/reaction/user/{userId}")
      ResponseEntity<Page<ReactionDTO>> getAllReactionsByUserId(@PathVariable long userId, @RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size);
-    @PostMapping
+    @PostMapping("/api/v1/reaction")
      ResponseEntity<ReactionDTO> addingReactionToAPost(
             @RequestBody ReactionDTO reactionDTO
     );
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/v1/reaction/{id}")
      ResponseEntity<String> deleteAReaction(@PathVariable Long id);
 }
