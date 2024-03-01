@@ -29,17 +29,18 @@ public class FriendServiceTest {
     @Mock
     private FriendShipService friendShipService;
 
+    private FriendShipEntity friendShip1;
+    private FriendShipEntity friendShip2;
+    private FriendShipEntity friendShip3;
+    private FriendShipDto friendShipDto1;
+    private FriendShipDto friendShipDto2;
+    private FriendShipDto friendShipDto3;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-    }
 
-    @Test
-    @DisplayName("Test-Get-All-Friend-Requested-Accepted-Rejected")
-    void testGetAllFriendRequestedAcceptedRejected() {
-
-        FriendShipEntity friendShip1 = new FriendShipEntity();
+        friendShip1 = new FriendShipEntity();
         friendShip1.setFriendshipId(1L);
         friendShip1.setUserId(1L);
         friendShip1.setFriendId(2L);
@@ -47,8 +48,7 @@ public class FriendServiceTest {
         friendShip1.setDateAddition(LocalDate.parse("2024-02-28"));
         friendShip1.setStatus(StatusFriendEnum.REJECTED);
 
-
-        FriendShipEntity friendShip2 = new FriendShipEntity();
+        friendShip2 = new FriendShipEntity();
         friendShip2.setFriendshipId(2L);
         friendShip2.setUserId(1L);
         friendShip2.setFriendId(3L);
@@ -56,7 +56,7 @@ public class FriendServiceTest {
         friendShip2.setDateAddition(LocalDate.parse("2024-02-20"));
         friendShip2.setStatus(StatusFriendEnum.ACCEPTED);
 
-        FriendShipEntity friendShip3 = new FriendShipEntity();
+        friendShip3 = new FriendShipEntity();
         friendShip3.setFriendshipId(3L);
         friendShip3.setUserId(1L);
         friendShip3.setFriendId(4L);
@@ -64,11 +64,9 @@ public class FriendServiceTest {
         friendShip3.setDateAddition(LocalDate.parse("2024-02-27"));
         friendShip3.setStatus(StatusFriendEnum.REJECTED);
 
-        List<FriendShipEntity> mockFriendShip = Arrays.asList(friendShip1, friendShip2, friendShip3);
-        when(friendShipRepository.findByDeletedFalse()).thenReturn(mockFriendShip);
+        /*===============================================================*/
 
-
-        FriendShipDto friendShipDto1 = new FriendShipDto();
+        friendShipDto1 = new FriendShipDto();
         friendShipDto1.setFriendshipId(1L);
         friendShipDto1.setUserId(1L);
         friendShipDto1.setFriendId(2L);
@@ -76,8 +74,7 @@ public class FriendServiceTest {
         friendShipDto1.setDateAddition(LocalDate.parse("2024-02-28"));
         friendShipDto1.setStatus(StatusFriendEnum.REJECTED);
 
-
-        FriendShipDto friendShipDto2 = new FriendShipDto();
+        friendShipDto2 = new FriendShipDto();
         friendShipDto2.setFriendshipId(2L);
         friendShipDto2.setUserId(1L);
         friendShipDto2.setFriendId(3L);
@@ -85,13 +82,24 @@ public class FriendServiceTest {
         friendShipDto2.setDateAddition(LocalDate.parse("2024-02-20"));
         friendShipDto2.setStatus(StatusFriendEnum.ACCEPTED);
 
-        FriendShipDto friendShipDto3 = new FriendShipDto();
+        friendShipDto3 = new FriendShipDto();
         friendShipDto3.setFriendshipId(3L);
         friendShipDto3.setUserId(1L);
         friendShipDto3.setFriendId(4L);
         friendShipDto3.setDeleted(false);
         friendShipDto3.setDateAddition(LocalDate.parse("2024-02-27"));
         friendShipDto3.setStatus(StatusFriendEnum.REJECTED);
+
+    }
+
+    @Test
+    @DisplayName("Test-Get-All-Friend-Requested-Accepted-Rejected")
+    void testGetAllFriendRequestedAcceptedRejected() {
+
+        /**/
+        List<FriendShipEntity> mockFriendShip = Arrays.asList(friendShip1, friendShip2, friendShip3);
+        when(friendShipRepository.findByDeletedFalse()).thenReturn(mockFriendShip);
+
 
         when(modelMapper.map(friendShip1, FriendShipDto.class)).thenReturn(friendShipDto1);
         when(modelMapper.map(friendShip2, FriendShipDto.class)).thenReturn(friendShipDto2);
