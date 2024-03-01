@@ -14,7 +14,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  *
  */
 @SpringBootApplication
-@EnableFeignClients
+@EnableFeignClients(
+        basePackages = "com.simplon"
+)
 @EnableConfigurationProperties({
         FileStorageProperties.class
 })
