@@ -9,7 +9,7 @@ import java.util.List;
 public interface ReactionService {
   Page<ReactionDTO> getAllReactionsByPostId(Long postId, Pageable pageable);
   Page<ReactionDTO> getAllReactionsByUseId(Long userId,Pageable pageable);
-  ReactionDTO addReactionToPost(ReactionDTO reactionDTO);
+
   void removeReactionFromAPost(Long id);
   ReactionDTO updateReaction(ReactionDTO reactionDTO);
 
