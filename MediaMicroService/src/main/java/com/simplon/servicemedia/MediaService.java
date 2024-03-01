@@ -40,11 +40,13 @@ public class MediaService implements IMedia{
     @Override
     public MediaDTO addMedia(MultipartFile file,long postId) throws FileStorageException {
         LOGGER.info("Upload file request received.");
+        //upload file
         String fileName = this.storeFile(file);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/MediaMicroService/uploads/")
                 .path(fileName)
                 .toUriString();
+        //save file's name and url to database
         MediaDTO mediaDTO = new MediaDTO();
         mediaDTO.setName(fileName);
         mediaDTO.setFileUrl(fileDownloadUri);
@@ -52,7 +54,6 @@ public class MediaService implements IMedia{
         LocalDateTime now = LocalDateTime.now();
         mediaDTO.setDateCreation(now.format(dateFormat));
         mediaDTO.setPostId(postId);
-        System.out.println(file.getContentType());
         String fullContentType = file.getContentType();
         String[] parts = fullContentType.split("/");
         String type = parts[0];
@@ -91,6 +92,13 @@ public class MediaService implements IMedia{
     public List<MediaDTO> listMedia() {
         LOGGER.info("List all media request received.");
         List<Media> mediaList = mediaRepository.findAll();
+        return mediaList.stream().map(media -> this.mapperConfig.modelMapper().map(media,MediaDTO.class)).toList();
+
+    }
+    @Override
+    public List<MediaDTO> listMediaByPostId(long postId) {
+        LOGGER.info("List all media request by post id.");
+        List<Media> mediaList = mediaRepository.findAllByPostId(postId);
         return mediaList.stream().map(media -> this.mapperConfig.modelMapper().map(media,MediaDTO.class)).toList();
 
     }

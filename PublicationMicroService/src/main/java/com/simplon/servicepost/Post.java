@@ -19,6 +19,7 @@ public class Post {
     private String content;
     private String datePost;
     private long userId;
+    private long groupId;
     private boolean deleted = false;
 
 }

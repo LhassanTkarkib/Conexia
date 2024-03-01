@@ -2,6 +2,7 @@ package com.simplon.servicemedia;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +24,13 @@ public class MediaController {
     public ResponseEntity<List<MediaDTO>> getAllMedia() {
         return new ResponseEntity<>(mediaService.listMedia(), HttpStatus.OK);
     }
-    @PostMapping("/{postId}")
-    public ResponseEntity<MediaDTO> addMedia(@RequestParam("file") MultipartFile file, @PathVariable(value = "postId") long postId) throws FileStorageException {
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<MediaDTO>> getAllMediaByPostId(@PathVariable(value = "postId") long postId) {
+        return new ResponseEntity<>(mediaService.listMediaByPostId(postId), HttpStatus.OK);
+    }
+    @PostMapping(path="/{postId}",consumes = { MediaType.APPLICATION_FORM_URLENCODED_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<MediaDTO> addMedia(@RequestParam(value = "file") MultipartFile file, @PathVariable(value = "postId") long postId) throws FileStorageException {
+        System.out.println("file : "+file.getOriginalFilename());
         return new ResponseEntity<>(mediaService.addMedia(file, postId), HttpStatus.CREATED);
     }
 
