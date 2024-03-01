@@ -55,7 +55,7 @@ public class FriendShipServiceImpl implements FriendShipService {
     public FriendShipDto updateFriendShip(long friendId, @NotNull FriendShipDto friendShipDto) throws ChangeSetPersister.NotFoundException {
 
         FriendShipEntity existingfriendShipEntity = friendShipRepository
-                .findByFriendshipIdAndFriendIdAndDeletedFalseAndStatusAllIgnoreCase(friendShipDto.getFriendshipId(),friendId, StatusFriendEnum.REQUESTED)
+                .findByFriendshipIdAndFriendIdAndDeletedFalseAndStatusAllIgnoreCase(friendShipDto.getFriendshipId(), friendId, StatusFriendEnum.REQUESTED)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
 
         existingfriendShipEntity.setStatus(friendShipDto.getStatus());
@@ -81,10 +81,11 @@ public class FriendShipServiceImpl implements FriendShipService {
 
 
     @Override
-    public FriendShipEntity searchSpecificFriend(long userId, long friendId, StatusFriendEnum status) throws ChangeSetPersister.NotFoundException {
-        return friendShipRepository
+    public FriendShipDto searchSpecificFriend(long userId, long friendId, StatusFriendEnum status) throws ChangeSetPersister.NotFoundException {
+        FriendShipEntity searchingFriendEntity = friendShipRepository
                 .findByUserIdAndFriendIdAndStatusAndDeletedFalseAllIgnoreCase(userId, friendId, status)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
+        return modelMapper.map(searchingFriendEntity, FriendShipDto.class);
     }
 
 
