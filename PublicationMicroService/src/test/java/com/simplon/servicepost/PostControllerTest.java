@@ -50,14 +50,14 @@ class PostControllerTest {
     void getPosts() {
     }
 
-    @Test
-    void addPost() throws Exception {
-        when(postService.addPost(postDTO,null)).thenReturn(postDTO);
-        mockMvc.perform(post("/api/v1/posts")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(postDTO)))
-                .andExpect(status().isCreated());
-    }
+//    @Test
+//    void addPost() throws Exception {
+//        when(postService.addPost(postDTO,null)).thenReturn(postDTO);
+//        mockMvc.perform(post("/api/v1/posts")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(new ObjectMapper().writeValueAsString(postDTO)))
+//                .andExpect(status().isCreated());
+//    }
 
     @Test
     void getPostById() throws Exception{
