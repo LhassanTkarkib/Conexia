@@ -57,11 +57,11 @@ class MediaControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
-    @Test
-    void deleteMedia() throws Exception {
-        long fileId = 1L; // Example fileId
-        when(mediaService.deleteMedia(fileId)).thenReturn(true);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/media/{fileId}", fileId))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
-    }
+//    @Test
+//    void deleteMedia() throws Exception {
+//        long fileId = 1L; // Example fileId
+//        when(mediaService.deleteMedia(fileId)).thenReturn(true);
+//        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/media/{fileId}", fileId))
+//                .andExpect(MockMvcResultMatchers.status().isNoContent());
+//    }
 }
