@@ -1,14 +1,26 @@
 pipeline {
     agent any
     tools{
-        maven 'maven_3_5_0'
+        maven 'Maven'
+        git 'git'   
     }
-    stages{
-        stage('Build Maven'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/dockertest']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/LhassanTkarkib/Connexia']]])
-                sh 'mvn clean install'
+      stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'dockertest', url: 'https://github.com/LhassanTkarkib/Connexia'
             }
         }
-   }
+
+        stage('Build') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'mvn clean install'
+                    } else {
+                        bat 'mvn clean install'
+                    }
+                }
+            }
+        }
+    }
 }
