@@ -3,7 +3,6 @@ pipeline {
     tools{
         maven 'Maven'
         git 'git'
-        docker 'docker' // Use the Docker tool named 'docker'
     }
     environment {
         PATH = "${env.PATH}:/usr/local/bin"
