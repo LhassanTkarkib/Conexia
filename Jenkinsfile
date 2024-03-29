@@ -22,12 +22,11 @@ pipeline {
                 }
             }
         }
-    stage('Building Docker Image') {
-      steps {
-        script {
-          sh "docker-compose -f ./docker-compose.yml build"
-        }
-      }
-    }
+stage('Build Docker Image') {  
+    steps{                     
+    sh 'docker-compose build'     
+    echo 'Docker-compose-build Build Image Completed'                
+    }           
+}
     }
 }
