@@ -3,7 +3,6 @@ pipeline {
     tools{
         maven 'Maven'
         git 'git'   
-        docker 'docker'
     }
       stages {
         stage('Checkout') {
