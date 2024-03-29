@@ -3,7 +3,7 @@ pipeline {
     tools{
         maven 'Maven'
         git 'git'
-        // Ensure you have a Docker installation configured in Jenkins with the name 'docker'
+        docker 'docker' // Use the Docker tool named 'docker'
     }
     environment {
         PATH = "${env.PATH}:/usr/local/bin"
@@ -28,15 +28,14 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            agent {
-                docker {
-                    image 'docker:24.0.5'
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+            steps{
+                script {
+                    // Use the Docker tool to execute docker-compose commands
+                    docker.inside('-v /var/run/docker.sock:/var/run/docker.sock') {
+                        sh 'docker-compose build'
+                        echo 'Docker-compose-build Build Image Completed'
+                    }
                 }
-            }
-            steps {
-                sh 'docker-compose build'
-                echo 'Docker-compose-build Build Image Completed'
             }
         }
     }
