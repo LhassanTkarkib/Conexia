@@ -27,15 +27,16 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps{
-                script {
-                    // Use the Docker tool to execute docker-compose commands
-                    docker.withTool('docker') {
-                        sh 'docker-compose build'
-                        echo 'Docker-compose-build Build Image Completed'
-                    }
+   stage('Build Docker Image') {
+            agent {
+                docker {
+                    image 'docker:24.0.5'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
+            }
+            steps {
+                sh 'docker-compose build'
+                echo 'Docker-compose-build Build Image Completed'
             }
         }
     }
