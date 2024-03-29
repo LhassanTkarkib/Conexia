@@ -117,6 +117,72 @@ services:
     networks:
       - connexia
 
+  publication-microservice:
+    build:
+      context: ./PublicationMicroService
+      dockerfile: Dockerfile
+    ports:
+      - '9093:9093'
+    depends_on:
+      - publication-db
+    networks:
+      - connexia
+
+  reaction-microservice:
+    build:
+      context: ./ReactionMicroService
+      dockerfile: Dockerfile
+    ports:
+      - '9094:9094'
+    depends_on:
+      - reaction-db
+    networks:
+      - connexia
+
+  media-microservice:
+    build:
+      context: ./MediaMicroService
+      dockerfile: Dockerfile
+    ports:
+      - '9095:9095'
+    depends_on:
+      - media-db
+    networks:
+      - connexia
+
+  group-microservice:
+    build:
+      context: ./GroupMicroService
+      dockerfile: Dockerfile
+    ports:
+      - '9096:9096'
+    depends_on:
+      - group-db
+    networks:
+      - connexia
+
+  notification-microservice:
+    build:
+      context: ./NotificationMicroService
+      dockerfile: Dockerfile
+    ports:
+      - '9097:9097'
+    depends_on:
+      - notification-db
+    networks:
+      - connexia
+
+  friendship-microservice:
+    build:
+      context: ./FriendMicroService
+      dockerfile: Dockerfile
+    ports:
+      - '9098:9098'
+    depends_on:
+      - friendship-db
+    networks:
+      - connexia
+
 networks:
   connexia:
     driver: bridge
