@@ -4,7 +4,10 @@ pipeline {
         maven 'Maven'
         git 'git'   
     }
-      stages {
+    environment {
+        PATH = "${env.PATH}:/usr/local/bin"
+    }
+    stages {
         stage('Checkout') {
             steps {
                 git branch: 'dockertest', url: 'https://github.com/LhassanTkarkib/Connexia'
@@ -22,11 +25,12 @@ pipeline {
                 }
             }
         }
-stage('Build Docker Image') {  
-    steps{                     
-    sh 'docker-compose build'     
-    echo 'Docker-compose-build Build Image Completed'                
-    }           
-}
+
+        stage('Build Docker Image') {
+            steps{
+                sh 'docker-compose build'
+                echo 'Docker-compose-build Build Image Completed'
+            }
+        }
     }
 }
