@@ -3,6 +3,7 @@ pipeline {
     tools{
         maven 'Maven'
         git 'git'   
+        docker 'docker'
     }
       stages {
         stage('Checkout') {
@@ -22,5 +23,12 @@ pipeline {
                 }
             }
         }
+    stage('Building Docker Image') {
+      steps {
+        script {
+          sh "docker-compose -f ./docker-compose.yml build"
+        }
+      }
+    }
     }
 }
