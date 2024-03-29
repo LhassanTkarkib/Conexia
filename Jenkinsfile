@@ -29,8 +29,6 @@ pipeline {
         stage('Build Docker Image') {
             steps{
                 script {
-                    // Use the Docker tool to execute docker-compose commands
-                    docker.inside('-v /var/run/docker.sock:/var/run/docker.sock') {
                         sh 'docker-compose build'
                         echo 'Docker-compose-build Build Image Completed'
                     }
