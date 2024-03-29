@@ -3,7 +3,7 @@ pipeline {
     tools{
         maven 'Maven'
         git 'git'
-        dockerTool 'docker' // Corrected to use dockerTool
+        // Ensure you have a Docker installation configured in Jenkins with the name 'docker'
     }
     environment {
         PATH = "${env.PATH}:/usr/local/bin"
@@ -30,7 +30,7 @@ pipeline {
         stage('Build Docker Image') {
             steps{
                 script {
-                    // Assuming 'docker' is the name of the Docker tool configured in Jenkins
+                    // Use the Docker tool to execute docker-compose commands
                     docker.withTool('docker') {
                         sh 'docker-compose build'
                         echo 'Docker-compose-build Build Image Completed'
