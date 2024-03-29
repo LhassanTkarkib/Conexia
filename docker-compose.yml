@@ -183,6 +183,16 @@ services:
     networks:
       - connexia
 
+  jenkins:
+    image: jenkins/jenkins:lts
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - jenkins_home:/var/jenkins_home
+    ports:
+      - "8080:8080"
+    networks:
+      - connexia
+
 networks:
   connexia:
     driver: bridge
@@ -195,3 +205,4 @@ volumes:
   publication-db:
   user-db:
   friendship-db:
+  jenkins_home:
