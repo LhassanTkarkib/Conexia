@@ -13,7 +13,7 @@ services:
     ports:
       - "5228:5432"
     networks:
-      - db
+      - connexia
     restart: unless-stopped
 
   notification-db:
@@ -28,7 +28,7 @@ services:
     ports:
       - "5227:5432"
     networks:
-      - db
+      - connexia
     restart: unless-stopped
 
   group-db:
@@ -43,7 +43,7 @@ services:
     ports:
       - "5225:5432"
     networks:
-      - db
+      - connexia
     restart: unless-stopped
 
   media-db:
@@ -58,7 +58,7 @@ services:
     ports:
       - "5224:5432"
     networks:
-      - db
+      - connexia
     restart: unless-stopped
 
   reaction-db:
@@ -73,7 +73,7 @@ services:
     ports:
       - "5226:5432"
     networks:
-      - db
+      - connexia
     restart: unless-stopped
 
   publication-db:
@@ -88,9 +88,8 @@ services:
     ports:
       - "5223:5432"
     networks:
-      - db
+      - connexia
     restart: unless-stopped
-
 
   user-db:
     container_name: user-microservice-db
@@ -104,11 +103,22 @@ services:
     ports:
       - "5222:5432"
     networks:
-      - db
+      - connexia
     restart: unless-stopped
 
+  user-microservice:
+    build:
+      context: ./UserMicroService
+      dockerfile: Dockerfile
+    ports:
+      - '9092:9092'
+    depends_on:
+      - user-db
+    networks:
+      - connexia
+
 networks:
-  db:
+  connexia:
     driver: bridge
 
 volumes:
